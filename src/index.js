@@ -8,6 +8,9 @@ import {
 import ErrorPage from "./pages/ErrorPage";
 import HomePage from "./pages/HomePage";
 import UserPage from "./pages/user/UserPage";
+import LoginPage from "./pages/LoginPage";
+import RequireAuthRoute from "./layout/RequireAuthRoute";
+
 const router = createBrowserRouter([
     {
         element: <App />,
@@ -19,8 +22,17 @@ const router = createBrowserRouter([
                 element: <HomePage />,
             },
             {
-                path: "user",
-                element: <UserPage />,
+                path: "login",
+                element: <LoginPage />,
+            },
+            {
+                element: <RequireAuthRoute />,
+                children: [
+                    {
+                        path: "user",
+                        element: <UserPage />,
+                    }
+                ]
             }
         ]
     },
