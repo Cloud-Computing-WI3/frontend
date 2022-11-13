@@ -28,7 +28,7 @@ function ProfileProvider (props) {
                 navigate("/");
                 setMessage({
                     code: 200,
-                    text: `Willkommen, ${data.user?.first_name} ${data.user?.last_name}`,
+                    text: `Welcome, ${data.user?.first_name} ${data.user?.last_name}!`,
                     show: true,
                     status: "success"
                 });
@@ -51,6 +51,12 @@ function ProfileProvider (props) {
                 })
                 .catch(() => {
                     logout();
+                    setMessage({
+                        code: 200,
+                        text: `You have been logged out.`,
+                        show: true,
+                        status: "info"
+                    });
                 });
         }
     }
@@ -65,6 +71,12 @@ function ProfileProvider (props) {
         setIsAuthenticated(false);
         setUser();
         navigate("/login");
+        setMessage({
+            code: 200,
+            text: `Successfully logged out.`,
+            show: true,
+            status: "success"
+        });
     }
 
     useEffect(() => {
