@@ -1,7 +1,6 @@
 import {Box} from "@mui/material";
 import {useMessage} from "../utils/providers/MessageProvider";
 import Message from "../components/Message";
-import {useProfile} from "../utils/providers/ProfileProvider";
 
 export default function Content(props) {
     const {message} = useMessage();

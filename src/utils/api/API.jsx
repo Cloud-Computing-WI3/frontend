@@ -1,6 +1,8 @@
 import axios from "axios";
 import {Auth} from "./routes/authentication";
 
+
+
 export const API = axios.create({
     baseURL: process.env.NODE_ENV ? "http://localhost:8000" : undefined,
     timeout: 15000,
@@ -39,6 +41,7 @@ API.interceptors.response.use(
                         if (refreshToken) {
                             Auth.refresh(refreshToken)
                                 .then((token) => {
+                                    console.log("REFRESH", token);
                                     localStorage.setItem("access", token.access);
                                     originalConfig.headers["Authorization"] = `Bearer ${token.access}`;
                                 })

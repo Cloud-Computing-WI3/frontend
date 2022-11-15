@@ -4,7 +4,6 @@ import {Auth} from "../api/routes/authentication";
 import {useMessage} from "./MessageProvider";
 
 export const ProfileContext = createContext();
-
 function ProfileProvider (props) {
     const localStore = localStorage.getItem("user");
     const localStorageUser = localStore ? JSON.parse(localStore) : null;
@@ -41,7 +40,7 @@ function ProfileProvider (props) {
 
     function refreshUser() {
         if (refreshToken && user) {
-            Auth.refresh(refreshToken, user.id)
+            Auth.refresh(refreshToken)
                 .then((data) => {
                     setUser(data.user);
                     setIsAuthenticated(true);

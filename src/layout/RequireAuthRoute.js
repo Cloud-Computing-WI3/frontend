@@ -7,7 +7,6 @@ export default function RequireAuthRoute(props) {
     const location = useLocation();
     if (user) {
         if (props.allowedRoles) {
-            // @ts-ignore
             if (user?.groups.find(role => props.allowedRoles?.includes(role.name))) {
                 return <Outlet/>;
             } else if (isAuthenticated) {

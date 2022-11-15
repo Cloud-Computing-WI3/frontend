@@ -1,4 +1,4 @@
-import {Button, Grid, TextField, Typography} from "@mui/material";
+import {Button, Grid, Link, TextField, Typography} from "@mui/material";
 import {useState} from "react";
 import {useProfile} from "../utils/providers/ProfileProvider";
 
@@ -24,6 +24,14 @@ export default function LoginPage() {
             </Grid>
             <Grid item xs={12}>
                 <TextField label="Password" variant="outlined" name="password" type="password" fullWidth onChange={(e) => setPassword(e.target.value)} value={password}/>
+            </Grid>
+            <Grid item xs={12} container spacing={2} sx={{justifyContent: {xs: "space-between", md: "center"}}}>
+                <Grid item>
+                    <Link to="/register">No account yet? Sign Up!</Link>
+                </Grid>
+                <Grid item>
+                    <Link to="#">Forgot password?</Link>
+                </Grid>
             </Grid>
             <Grid item xs={12}>
                 <Button variant="contained" onClick={handleLogin} fullWidth>Login</Button>

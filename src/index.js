@@ -10,6 +10,7 @@ import HomePage from "./pages/HomePage";
 import UserPage from "./pages/user/UserPage";
 import LoginPage from "./pages/LoginPage";
 import RequireAuthRoute from "./layout/RequireAuthRoute";
+import RegisterPage from "./pages/RegisterPage";
 
 const router = createBrowserRouter([
     {
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
             {
                 path: "login",
                 element: <LoginPage />,
+            },
+            {
+                path: "register",
+                element: <RegisterPage />,
             },
             {
                 element: <RequireAuthRoute />,
