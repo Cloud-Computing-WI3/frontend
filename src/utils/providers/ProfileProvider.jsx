@@ -21,6 +21,9 @@ function ProfileProvider (props) {
                 setAccessToken(data.access);
                 localStorage.setItem("refresh", data.refresh);
                 setRefreshToken(data.refresh);
+                if (data.user.avatar) {
+                    data.user.avatar = import.meta.env.VITE_BACKEND_URL + data.user.avatar;
+                }
                 setUser(data.user);
                 localStorage.setItem("user", JSON.stringify(data.user));
                 setIsAuthenticated(true);
@@ -42,6 +45,9 @@ function ProfileProvider (props) {
         if (refreshToken && user) {
             Auth.refresh(refreshToken)
                 .then((data) => {
+                    if (data.user.avatar) {
+                        data.user.avatar = import.meta.env.VITE_BACKEND_URL + data.user.avatar;
+                    }
                     setUser(data.user);
                     setIsAuthenticated(true);
                     setAccessToken(data.access);
