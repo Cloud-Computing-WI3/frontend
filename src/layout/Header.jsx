@@ -9,12 +9,12 @@ import MenuIcon from '@mui/icons-material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import {Avatar, Link} from "@mui/material";
-import {useProfile} from "../utils/providers/ProfileProvider";
+import {useAccount} from "../utils/providers/AccountProvider.jsx";
 import {useNavigate} from "react-router-dom";
 
 export default function Header() {
     const [anchorEl, setAnchorEl] = useState(null);
-    const {user, logout, isAuthenticated} = useProfile();
+    const {user, logout, isAuthenticated} = useAccount();
     const navigate = useNavigate();
 
     const handleMenu = (event) => {

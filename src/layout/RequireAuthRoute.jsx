@@ -1,9 +1,9 @@
 import {Navigate, Outlet, useLocation} from "react-router-dom";
 import React from "react";
-import {useProfile} from "../utils/providers/ProfileProvider";
+import {useAccount} from "../utils/providers/AccountProvider.jsx";
 
 export default function RequireAuthRoute(props) {
-    const {user, isAuthenticated} = useProfile();
+    const {user, isAuthenticated} = useAccount();
     const location = useLocation();
     if (user) {
         if (props.allowedRoles) {

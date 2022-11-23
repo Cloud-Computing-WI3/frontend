@@ -1,14 +1,14 @@
 import {Avatar, Grid, TextField, Typography} from "@mui/material";
-import {useProfile} from "../../utils/providers/ProfileProvider";
+import {useAccount} from "../../utils/providers/AccountProvider.jsx";
 import {useEffect, useState} from "react";
-import {Profiles} from "../../utils/api/routes/profiles";
+import {Accounts} from "../../utils/api/routes/accounts.js";
 import {AccountCircle} from "@mui/icons-material";
 
 export default function UserPage() {
-    const {user} = useProfile();
+    const {user} = useAccount();
     const [profile, setProfile] = useState({});
     useEffect(() => {
-        Profiles.get(user.id)
+        Accounts.get(user.id)
             .then(res => {
                 console.log(res);
                 console.log(process.env.REACT_APP_GOOGLE_CLIENT_ID);
@@ -21,10 +21,10 @@ export default function UserPage() {
             </Grid>
             <Grid item container xs={8} spacing={3}>
                 <Grid item xs={12}>
-                    <TextField value={user.first_name} label="First name" fullWidth />
+                    <TextField value={user.given_name} label="First name" fullWidth />
                 </Grid>
                 <Grid item xs={12}>
-                    <TextField value={user.last_name} label="Last name" fullWidth />
+                    <TextField value={user.family_name} label="Last name" fullWidth />
                 </Grid>
             </Grid>
         </Grid>

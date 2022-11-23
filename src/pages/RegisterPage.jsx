@@ -7,6 +7,7 @@ import {Avatar, Button, Grid, TextField} from "@mui/material";
 import {useState} from "react";
 import {Auth} from "../utils/api/routes/authentication";
 
+
 export default function RegisterPage() {
     const [filePreview, setFilePreview] = useState("");
     const {setMessage} = useMessage();
@@ -38,7 +39,6 @@ export default function RegisterPage() {
             });
         },
     });
-
     return (<>
         <Typography variant="h1">Register</Typography>
         <form onSubmit={registrationForm.handleSubmit}>
@@ -142,5 +142,6 @@ export default function RegisterPage() {
                 </Grid>
             </Grid>
         </form>
+
     </>)
 }

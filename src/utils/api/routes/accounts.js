@@ -1,9 +1,9 @@
 import {API, responseBody} from "../API";
 
 const requests = {
-    get: (id) => API.get(`/profiles/${id}`).then(responseBody),
+    get: (id) => API.get(`/accounts/${id}`).then(responseBody),
 };
 
-export const Profiles = {
+export const Accounts = {
     get: (id) => requests.get(id),
 }

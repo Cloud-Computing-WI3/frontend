@@ -4,7 +4,7 @@ import {Auth} from "../api/routes/authentication";
 import {useMessage} from "./MessageProvider";
 
 export const ProfileContext = createContext();
-function ProfileProvider (props) {
+function AccountProvider (props) {
     const localStore = localStorage.getItem("user");
     const localStorageUser = localStore ? JSON.parse(localStore) : null;
     const [user, setUser] = useState(localStorageUser ? localStorageUser : null);
@@ -14,13 +14,36 @@ function ProfileProvider (props) {
     const navigate = useNavigate();
     const {setMessage} = useMessage();
 
+    function googleLogin(token, googleId, tokenId) {
+        Auth.googleLogin(token, googleId, tokenId)
+            .then((data) => {
+                localStorage.setItem("access", data.access_token);
+                setAccessToken(data.access_token);
+                localStorage.setItem("refresh", data.refresh_token);
+                setRefreshToken(data.refresh_token);
+                if (data.user.picture) {
+                    data.user.picture = import.meta.env.VITE_BACKEND_URL + data.user.picture;
+                }
+                setUser(data.user);
+                localStorage.setItem("user", JSON.stringify(data.user));
+                setIsAuthenticated(true);
+                navigate("/");
+                setMessage({
+                    code: 200,
+                    text: `Welcome, ${data.user?.given_name} ${data.user?.family_name}!`,
+                    show: true,
+                    status: "success"
+                });
+            })
+
+    }
     function login(username, password) {
         Auth.login(username, password)
             .then((data) => {
-                localStorage.setItem("access", data.access);
-                setAccessToken(data.access);
-                localStorage.setItem("refresh", data.refresh);
-                setRefreshToken(data.refresh);
+                localStorage.setItem("access", data.access_token);
+                setAccessToken(data.access_token);
+                localStorage.setItem("refresh", data.refresh_token);
+                setRefreshToken(data.refresh_token);
                 if (data.user.avatar) {
                     data.user.avatar = import.meta.env.VITE_BACKEND_URL + data.user.avatar;
                 }
@@ -30,7 +53,7 @@ function ProfileProvider (props) {
                 navigate("/");
                 setMessage({
                     code: 200,
-                    text: `Welcome, ${data.user?.first_name} ${data.user?.last_name}!`,
+                    text: `Welcome, ${data.user?.given_name} ${data.user?.family_name}!`,
                     show: true,
                     status: "success"
                 });
@@ -45,13 +68,13 @@ function ProfileProvider (props) {
         if (refreshToken && user) {
             Auth.refresh(refreshToken)
                 .then((data) => {
-                    if (data.user.avatar) {
-                        data.user.avatar = import.meta.env.VITE_BACKEND_URL + data.user.avatar;
+                    if (data.user.picture) {
+                        data.user.picture = import.meta.env.VITE_BACKEND_URL + data.user.picture;
                     }
                     setUser(data.user);
                     setIsAuthenticated(true);
-                    setAccessToken(data.access);
-                    localStorage.setItem("access", data.access);
+                    setAccessToken(data.access_token);
+                    localStorage.setItem("access", data.access_token);
                     localStorage.setItem("user", JSON.stringify(user));
                 })
                 .catch(() => {
@@ -91,14 +114,14 @@ function ProfileProvider (props) {
     }, []);
 
     return (
-        <ProfileContext.Provider value={{user, setUser, isAuthenticated, login, logout, refreshUser}}>
+        <ProfileContext.Provider value={{user, setUser, isAuthenticated, login, logout, refreshUser, googleLogin}}>
             {props.children}
         </ProfileContext.Provider>
     );
 }
 
-const useProfile = () => {
+const useAccount = () => {
     return useContext(ProfileContext);
 };
 
-export {ProfileProvider, useProfile};
+export {AccountProvider, useAccount};
