@@ -14,7 +14,7 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import { Avatar, Link } from "@mui/material";
-import { useProfile } from "../utils/providers/ProfileProvider";
+import { useAccount } from "../utils/providers/AccountProvider.jsx";
 import { useNavigate } from "react-router-dom";
 
 export default function Header() {
@@ -23,7 +23,7 @@ export default function Header() {
     const navigationLinks = ["Top Articles", "Tech News", "Sports"]
 
     const [anchorEl, setAnchorEl] = useState(null);
-    const { user, logout, isAuthenticated } = useProfile();
+    const { user, logout, isAuthenticated } = useAccount();
     const navigate = useNavigate();
     const [open, setOpen] = useState(false)
 
@@ -101,15 +101,16 @@ export default function Header() {
                     <Toolbar sx={{ minWidth: 250, maxWidth: 'md', display: "flex", justifyContent: "flex-end" }}>
                         <IconButton
                             size="large"
+                            onClick={() => setOpen(false)}
                             color="inherit">
-                            <ChevronLeftIcon onClick={() => setOpen(false)} />
+                            <ChevronLeftIcon  />
                         </IconButton>
                     </Toolbar>
                     <Divider />
                     <List>
                         {
                             navigationLinks.map(link => (
-                                <ListItem>
+                                <ListItem key={link}>
                                     <Typography variant="button" display="block" gutterBottom>
                                         <Link key={link.id} to={'#'} color="inherit" sx={{ textDecoration: "none" }}>{link}</Link>
                                     </Typography>

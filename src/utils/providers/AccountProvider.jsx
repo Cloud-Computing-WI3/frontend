@@ -2,8 +2,10 @@ import React, {createContext, useContext, useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {Auth} from "../api/routes/authentication";
 import {useMessage} from "./MessageProvider";
+import {useGoogleLogout} from "react-google-login";
 
-export const ProfileContext = createContext();
+
+export const AccountContext = createContext();
 function AccountProvider (props) {
     const localStore = localStorage.getItem("user");
     const localStorageUser = localStore ? JSON.parse(localStore) : null;
@@ -13,6 +15,10 @@ function AccountProvider (props) {
     const [accessToken, setAccessToken] = useState(localStorage.getItem("access"));
     const navigate = useNavigate();
     const {setMessage} = useMessage();
+    const googleClientId = "336520046482-27egm1na9kpsnru77n8dgbm89a9uoqkn.apps.googleusercontent.com";
+    const {signOut} = useGoogleLogout({
+        googleClientId
+    });
 
     function googleLogin(token, googleId, tokenId) {
         Auth.googleLogin(token, googleId, tokenId)
@@ -98,6 +104,7 @@ function AccountProvider (props) {
         setAccessToken("");
         setIsAuthenticated(false);
         setUser();
+        signOut();
         navigate("/login");
         setMessage({
             code: 200,
@@ -106,7 +113,6 @@ function AccountProvider (props) {
             status: "success"
         });
     }
-
     useEffect(() => {
         if (localStorage.getItem("refresh") !== null && !isAuthenticated && localStorage.getItem("user")) {
             refreshUser();
@@ -114,14 +120,14 @@ function AccountProvider (props) {
     }, []);
 
     return (
-        <ProfileContext.Provider value={{user, setUser, isAuthenticated, login, logout, refreshUser, googleLogin}}>
+        <AccountContext.Provider value={{user, setUser, isAuthenticated, login, logout, refreshUser, googleLogin, googleClientId}}>
             {props.children}
-        </ProfileContext.Provider>
+        </AccountContext.Provider>
     );
 }
 
 const useAccount = () => {
-    return useContext(ProfileContext);
+    return useContext(AccountContext);
 };
 
 export {AccountProvider, useAccount};

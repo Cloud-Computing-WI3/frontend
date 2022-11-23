@@ -7,8 +7,8 @@ import {GoogleLogin} from "react-google-login";
 export default function LoginPage() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const {login, googleLogin} = useAccount();
-    const clientId = "336520046482-27egm1na9kpsnru77n8dgbm89a9uoqkn.apps.googleusercontent.com";
+    const {login, googleLogin, googleClientId} = useAccount();
+
 
     const handleLogin = () => {
         login(email, password);
@@ -17,14 +17,13 @@ export default function LoginPage() {
     useEffect(() => {
         const initClient = () => {
             gapi.client.init({
-                clientId: clientId,
-                scope: ''
+                clientId: googleClientId,
+                scope: "https://www.googleapis.com/auth/userinfo.profile"
             });
         };
         gapi.load('client:auth2', initClient);
     });
     const onSuccess = (res) => {
-        console.log("success", res);
         googleLogin(res.accessToken, res.googleId, res.tokenId);
     };
     const onFailure = (err) => {
@@ -57,7 +56,7 @@ export default function LoginPage() {
             </Grid>
             <Grid item xs={12}>
                 <GoogleLogin
-                    clientId={clientId}
+                    clientId={googleClientId}
                     buttonText="Sign in with Google"
                     onSuccess={onSuccess}
                     onFailure={onFailure}
