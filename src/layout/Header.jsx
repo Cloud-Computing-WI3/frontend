@@ -58,10 +58,9 @@ export default function Header() {
                             aria-controls="menu-appbar"
                             aria-haspopup="true"
                             onClick={handleMenu}
-                            color="inherit"
                         >
                             {user ?
-                                user.avatar ? <Avatar src={user.avatar} />
+                                user.picture ? <Avatar src={user.picture} />
                                     : <Avatar alt={"Avatar"}>
                                         {user && user.first_name?.charAt(0)}
                                         {user && user.last_name?.charAt(0)}

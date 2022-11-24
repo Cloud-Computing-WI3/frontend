@@ -28,7 +28,7 @@ function AccountProvider (props) {
                 localStorage.setItem("refresh", data.refresh_token);
                 setRefreshToken(data.refresh_token);
                 if (data.user.picture) {
-                    data.user.picture = import.meta.env.VITE_BACKEND_URL + data.user.picture;
+                    data.user.picture = data.user.picture;
                 }
                 setUser(data.user);
                 localStorage.setItem("user", JSON.stringify(data.user));
@@ -50,8 +50,8 @@ function AccountProvider (props) {
                 setAccessToken(data.access_token);
                 localStorage.setItem("refresh", data.refresh_token);
                 setRefreshToken(data.refresh_token);
-                if (data.user.avatar) {
-                    data.user.avatar = import.meta.env.VITE_BACKEND_URL + data.user.avatar;
+                if (data.user.picture) {
+                    data.user.picture = data.user.picture;
                 }
                 setUser(data.user);
                 localStorage.setItem("user", JSON.stringify(data.user));

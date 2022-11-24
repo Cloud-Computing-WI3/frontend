@@ -7,7 +7,7 @@ import {GoogleLogin} from "react-google-login";
 export default function LoginPage() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const {login, googleLogin, googleClientId} = useAccount();
+    const {login, googleLogin, googleClientId, user} = useAccount();
 
 
     const handleLogin = () => {
@@ -15,13 +15,15 @@ export default function LoginPage() {
     }
 
     useEffect(() => {
-        const initClient = () => {
-            gapi.client.init({
-                clientId: googleClientId,
-                scope: "https://www.googleapis.com/auth/userinfo.profile"
-            });
-        };
-        gapi.load('client:auth2', initClient);
+        if (!user) {
+            const initClient = () => {
+                gapi.client.init({
+                    clientId: googleClientId,
+                    scope: "https://www.googleapis.com/auth/userinfo.profile"
+                });
+            };
+            gapi.load('client:auth2', initClient);
+        }
     });
     const onSuccess = (res) => {
         googleLogin(res.accessToken, res.googleId, res.tokenId);
