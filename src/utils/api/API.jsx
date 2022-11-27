@@ -4,7 +4,7 @@ import {Auth} from "./routes/authentication";
 
 
 export const API = axios.create({
-    baseURL: process.env.NODE_ENV ? "http://localhost:8000" : undefined,
+    baseURL: "https://profile-management-2qda3nwega-uc.a.run.app",
     timeout: 15000,
     headers: {}
 });

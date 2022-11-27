@@ -15,13 +15,13 @@ export default function RegisterPage() {
 
     const registrationForm = useFormik({
         initialValues: {
-            first_name: "", last_name: "", email: "", password: "", password2: ""
+            given_name: "", family_name: "", email: "", password: "", password2: ""
         }, validationSchema: Yup.object({
-            first_name: Yup.string().required("Required"),
-            last_name: Yup.string().required("Required"),
+            given_name: Yup.string().required("Required"),
+            family_name: Yup.string().required("Required"),
             email: Yup.string().email("Invalid email address").required("Required"),
-            password: Yup.string().required("Required").oneOf([Yup.ref("password2"), null], "Passwords must match"),
-            password2: Yup.string().required("Required").oneOf([Yup.ref("password"), null], "Passwords must match"),
+            password1: Yup.string().required("Required").oneOf([Yup.ref("password2"), null], "Passwords must match"),
+            password2: Yup.string().required("Required").oneOf([Yup.ref("password1"), null], "Passwords must match"),
         }), onSubmit: (values) => {
             const formData = new FormData();
             for (const [key, value] of Object.entries(values)) {
@@ -45,26 +45,26 @@ export default function RegisterPage() {
             <Grid item container spacing={2}>
                 <Grid item xs={12}>
                     <TextField
-                        name="first_name"
+                        name="given_name"
                         type="text"
                         label="First name"
                         onChange={registrationForm.handleChange}
-                        value={registrationForm.values.first_name}
-                        error={!!registrationForm.errors.first_name}
-                        helperText={registrationForm.errors.first_name}
+                        value={registrationForm.values.given_name}
+                        error={!!registrationForm.errors.given_name}
+                        helperText={registrationForm.errors.given_name}
                         required
                         fullWidth
                     />
                 </Grid>
                 <Grid item xs={12}>
                     <TextField
-                        name="last_name"
+                        name="family_name"
                         type="text"
                         label="Last name"
                         onChange={registrationForm.handleChange}
-                        value={registrationForm.values.last_name}
-                        error={!!registrationForm.errors.last_name}
-                        helperText={registrationForm.errors.last_name}
+                        value={registrationForm.values.family_name}
+                        error={!!registrationForm.errors.family_name}
+                        helperText={registrationForm.errors.family_name}
                         required
                         fullWidth
                     />
@@ -85,13 +85,13 @@ export default function RegisterPage() {
                 <Grid item container spacing={2}>
                     <Grid item xs={12}>
                         <TextField
-                            name="password"
+                            name="password1"
                             type="password"
                             label="Password"
                             onChange={registrationForm.handleChange}
-                            value={registrationForm.values.password}
-                            error={!!registrationForm.errors.password}
-                            helperText={registrationForm.errors.password}
+                            value={registrationForm.values.password1}
+                            error={!!registrationForm.errors.password1}
+                            helperText={registrationForm.errors.password1}
                             fullWidth
                             required
                         />

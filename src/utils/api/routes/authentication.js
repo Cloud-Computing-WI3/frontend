@@ -16,7 +16,7 @@ const requests = {
         }).then(responseBody)
     },
     register: (account) => {
-        return API.post("auth/register/", account, {
+        return API.post("auth/registration/", account, {
             headers: {
                 "Content-Type": "multipart/form-data",
             }

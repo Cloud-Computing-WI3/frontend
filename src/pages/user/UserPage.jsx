@@ -2,16 +2,16 @@ import {Avatar, Grid, TextField, Typography} from "@mui/material";
 import {useAccount} from "../../utils/providers/AccountProvider.jsx";
 import {useEffect, useState} from "react";
 import {Accounts} from "../../utils/api/routes/accounts.js";
-import {AccountCircle} from "@mui/icons-material";
+import {useMessage} from "../../utils/providers/MessageProvider.jsx";
 
 export default function UserPage() {
     const {user} = useAccount();
     const [profile, setProfile] = useState({});
+    const {setMessage} = useMessage();
     useEffect(() => {
         Accounts.get(user.id)
             .then(res => {
                 console.log(res);
-                console.log(process.env.REACT_APP_GOOGLE_CLIENT_ID);
             })
     })
     return (
