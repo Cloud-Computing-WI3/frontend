@@ -5,7 +5,7 @@ import {useMessage} from "../utils/providers/MessageProvider";
 import {useNavigate} from "react-router-dom";
 import {Avatar, Button, Grid, TextField} from "@mui/material";
 import {useState} from "react";
-import {Auth} from "../utils/api/routes/authentication";
+import {Auth} from "../utils/apis/profile_management/authentication.js";
 
 
 export default function RegisterPage() {

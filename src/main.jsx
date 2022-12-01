@@ -11,6 +11,7 @@ import UserPage from "./pages/user/UserPage";
 import LoginPage from "./pages/LoginPage";
 import RequireAuthRoute from "./layout/RequireAuthRoute";
 import RegisterPage from "./pages/RegisterPage";
+import {Articles} from "./utils/apis/news_feed/articles.js";
 
 const router = createBrowserRouter([
     {
@@ -21,6 +22,9 @@ const router = createBrowserRouter([
             {
                 path: "",
                 element: <HomePage />,
+                loader: async () => {
+                    return Articles.get({category_name: "sports", elastic_pointer: null})
+                },
             },
             {
                 path: "login",

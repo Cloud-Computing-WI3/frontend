@@ -1,7 +1,7 @@
 import {Avatar, Grid, TextField, Typography} from "@mui/material";
 import {useAccount} from "../../utils/providers/AccountProvider.jsx";
 import {useEffect, useState} from "react";
-import {Accounts} from "../../utils/api/routes/accounts.js";
+import {Accounts} from "../../utils/apis/profile_management/accounts.js";
 import {useMessage} from "../../utils/providers/MessageProvider.jsx";
 
 export default function UserPage() {

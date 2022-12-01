@@ -1,6 +1,6 @@
 import React, {createContext, useContext, useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
-import {Auth} from "../api/routes/authentication";
+import {Auth} from "../apis/profile_management/authentication.js";
 import {useMessage} from "./MessageProvider";
 import {useGoogleLogout} from "react-google-login";
 

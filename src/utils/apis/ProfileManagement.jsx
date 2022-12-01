@@ -1,15 +1,16 @@
 import axios from "axios";
-import {Auth} from "./routes/authentication";
+import {Auth} from "./profile_management/authentication.js";
 
 
+// baseURL: "https://profile-management-2qda3nwega-uc.a.run.app",
 
-export const API = axios.create({
-    baseURL: "https://profile-management-2qda3nwega-uc.a.run.app",
+export const ProfileManagement = axios.create({
+    baseURL: "http://localhost:8000",
     timeout: 15000,
     headers: {}
 });
 
-API.interceptors.request.use(
+ProfileManagement.interceptors.request.use(
     async (config) => {
         const accessToken = localStorage.getItem("access");
         if (accessToken) {
@@ -24,7 +25,7 @@ API.interceptors.request.use(
     (error) => Promise.reject(error)
 );
 
-API.interceptors.response.use(
+ProfileManagement.interceptors.response.use(
     (res) => {
         return res;
     },
@@ -51,7 +52,7 @@ API.interceptors.response.use(
                                     localStorage.removeItem("user");
                                 });
                         }
-                        return API(originalConfig);
+                        return ProfileManagement(originalConfig);
                     } catch (_error) {
                         return Promise.reject(_error);
                     }

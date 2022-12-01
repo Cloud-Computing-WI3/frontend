@@ -1,22 +1,22 @@
-import {API, responseBody} from "../API";
+import {ProfileManagement, responseBody} from "../ProfileManagement.jsx";
 
 const requests = {
-    login: (username, password) => API.post("/auth/login/", {
+    login: (username, password) => ProfileManagement.post("/auth/login/", {
         email: username,
         password: password
     }).then(responseBody),
-    googleLogin: (accessToken, googleId, tokenId) => API.post("/auth/google/", {
+    googleLogin: (accessToken, googleId, tokenId) => ProfileManagement.post("/auth/google/", {
         access_token: accessToken,
         code: googleId,
         id_token: tokenId
     }).then(responseBody),
     refresh: (token) => {
-        return API.post("/auth/refresh/", {
+        return ProfileManagement.post("/auth/refresh/", {
             refresh: token
         }).then(responseBody)
     },
     register: (account) => {
-        return API.post("auth/registration/", account, {
+        return ProfileManagement.post("auth/registration/", account, {
             headers: {
                 "Content-Type": "multipart/form-data",
             }
