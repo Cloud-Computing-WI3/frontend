@@ -17,7 +17,7 @@ export default function MediaCard(props) {
             />
             <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
-                    {props.author !== "" && props.author !== null ? props.author : props.source.name !== "" && props.source.name !== null ? props.source.name : props.category}
+                    {props.author !== "" && props.author !== null ? props.author : props.category.name !== "" && props.category.name !== null ? props.category.name : "Headline"}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
                     {props.description}

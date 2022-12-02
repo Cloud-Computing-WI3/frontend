@@ -22,8 +22,12 @@ const router = createBrowserRouter([
             {
                 path: "",
                 element: <HomePage />,
-                loader: async () => {
-                    return Articles.get({category_name: "sports", elastic_pointer: null})
+                loader: () => {
+                    return Articles.get({category_name: "sports", elastic_pointer: null}).then(res => {
+                        return res;
+                    }).catch(e => {
+                        console.log(e);
+                    })
                 },
             },
             {
