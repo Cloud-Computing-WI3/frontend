@@ -12,6 +12,7 @@ import LoginPage from "./pages/LoginPage";
 import RequireAuthRoute from "./layout/RequireAuthRoute";
 import RegisterPage from "./pages/RegisterPage";
 import {Articles} from "./utils/apis/news_feed/articles.js";
+import NewsPage from "./pages/NewsPage";
 
 const router = createBrowserRouter([
     {
@@ -23,7 +24,18 @@ const router = createBrowserRouter([
                 path: "",
                 element: <HomePage />,
                 loader: () => {
-                    return Articles.get({category_name: "sports", elastic_pointer: null}).then(res => {
+                    return Articles.get({category_name: "general", elastic_pointer: null}).then(res => {
+                        return res;
+                    }).catch(e => {
+                        console.log(e);
+                    })
+                },
+            },
+            {
+                path: ":categoryName",
+                element: <NewsPage />,
+                loader: ({params}) => {
+                    return Articles.get({category_name: params.categoryName, elastic_pointer: null}).then(res => {
                         return res;
                     }).catch(e => {
                         console.log(e);

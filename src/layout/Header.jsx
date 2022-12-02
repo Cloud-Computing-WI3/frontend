@@ -20,7 +20,7 @@ import { useNavigate } from "react-router-dom";
 export default function Header() {
 
     // dummy data for drawer navigation links
-    const navigationLinks = ["Top Articles", "Tech News", "Sports"]
+    const navigationLinks = [{name: "Top Articles", link: "/"}, {name: "Tech News", link:"technology"}, {name: "Sports", link: "sports"}]
 
     const [anchorEl, setAnchorEl] = useState(null);
     const { user, logout, isAuthenticated } = useAccount();
@@ -109,9 +109,9 @@ export default function Header() {
                     <List>
                         {
                             navigationLinks.map(link => (
-                                <ListItem key={link}>
+                                <ListItem key={link.link}>
                                     <Typography variant="button" display="block" gutterBottom>
-                                        <Link key={link.id} to={'#'} color="inherit" sx={{ textDecoration: "none" }}>{link}</Link>
+                                        <Link key={link.link} to={link.link} color="inherit" sx={{ textDecoration: "none" }}>{link.name}</Link>
                                     </Typography>
                                 </ListItem>
                             ))
