@@ -45,7 +45,7 @@ export default function HomePage() {
             <Typography variant="h1" sx={{ m: 2 }}>Top Articles</Typography>
             <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
                 {data.articles && data.articles.map(article => (
-                    <Grid item xs={12} sm={6} md={3} key={article.author}>
+                    <Grid item xs={12} sm={6} md={3} key={article.publishedAt}>
                         <MediaCard key={data.id} {...article}></MediaCard>
                     </Grid>))
                 }
