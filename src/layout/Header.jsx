@@ -19,8 +19,21 @@ import { useNavigate } from "react-router-dom";
 
 export default function Header() {
 
-    // dummy data for drawer navigation links
-    const navigationLinks = [{name: "Top Articles", link: "/"}, {name: "Tech News", link:"technology"}, {name: "Sports", link: "sports"}]
+    // drawer navigation links
+    const navigationLinks = [
+        {name: "Top Articles", link: "/"},
+        // keywords page --> testwise for keywords 'etf' and 'apple'
+        {name: "My Keywords", link: "/keywords/etf,apple"},
+        // my categories --> testwise for keywords 'health' and 'sports'
+        {name: "My Categories", link: "/my_categories/health,sports"},
+        // category pages
+        {name: "Technology", link:"/categories/technology"},
+        {name: "Sports", link: "/categories/sports"},
+        {name: "Business", link: "/categories/business"},
+        {name: "Health", link: "/categories/health"},
+        {name: "Entertainment", link: "/categories/entertainment"},
+        {name: "Science", link: "/categories/science"},
+    ]
 
     const [anchorEl, setAnchorEl] = useState(null);
     const { user, logout, isAuthenticated } = useAccount();
