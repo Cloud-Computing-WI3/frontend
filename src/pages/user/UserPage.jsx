@@ -35,6 +35,8 @@ export default function UserPage() {
                         onSubmit={values => {
                             Accounts.save(values, user.id).then(res => {
                                 setUser(res);
+                                localStorage.setItem("user", JSON.stringify(res));
+                                setMessage({show: true, status: "success", text: "Account succesfully saved", code: 200});
                             }).catch(e => console.log(e));
                         }}
                         validationSchema={Yup.object({
