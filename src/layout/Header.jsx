@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState } from 'react';
+import {useState} from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -13,12 +13,11 @@ import Divider from '@mui/material/Divider';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-import { Avatar, Link } from "@mui/material";
-import { useAccount } from "../utils/providers/AccountProvider.jsx";
-import { useNavigate } from "react-router-dom";
+import {Avatar, Link} from "@mui/material";
+import {useAccount} from "../utils/providers/AccountProvider.jsx";
+import {useNavigate} from "react-router-dom";
 
 export default function Header() {
-
     // drawer navigation links
     const navigationLinks = [
         {name: "Top Articles", link: "/"},
@@ -26,7 +25,7 @@ export default function Header() {
         // my categories --> testwise for keywords 'health' and 'sports'
         {name: "My Categories", link: "/my/categories"},
         // category pages
-        {name: "Technology", link:"/categories/technology"},
+        {name: "Technology", link: "/categories/technology"},
         {name: "Sports", link: "/categories/sports"},
         {name: "Business", link: "/categories/business"},
         {name: "Health", link: "/categories/health"},
@@ -35,7 +34,7 @@ export default function Header() {
     ]
 
     const [anchorEl, setAnchorEl] = useState(null);
-    const { user, logout, isAuthenticated } = useAccount();
+    const {user, logout, isAuthenticated} = useAccount();
     const navigate = useNavigate();
     const [open, setOpen] = useState(false)
 
@@ -45,9 +44,11 @@ export default function Header() {
 
     const handleClose = () => {
         setAnchorEl(null);
+        setOpen(false);
     };
+
     return (
-        <Box sx={{ flexGrow: 1 }}>
+        <Box sx={{flexGrow: 1}}>
             <AppBar position="static">
                 <Toolbar>
                     <IconButton
@@ -56,12 +57,12 @@ export default function Header() {
                         color="inherit"
                         aria-label="menu"
                         onClick={() => setOpen(true)}
-                        sx={{ mr: 2 }}
+                        sx={{mr: 2}}
                     >
-                        <MenuIcon />
+                        <MenuIcon/>
                     </IconButton>
-                    <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                        <Link to="/" color="inherit" sx={{ textDecoration: "none" }}>Newsify</Link>
+                    <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
+                        <Link to="/" color="inherit" sx={{textDecoration: "none"}}>Newsify</Link>
                     </Typography>
                     <div>
                         <IconButton
@@ -72,12 +73,12 @@ export default function Header() {
                             onClick={handleMenu}
                         >
                             {user ?
-                                user.picture ? <Avatar src={user.picture} />
+                                user.picture ? <Avatar src={user.picture}/>
                                     : <Avatar alt={"Avatar"}>
                                         {user && user.first_name?.charAt(0)}
                                         {user && user.last_name?.charAt(0)}
                                     </Avatar>
-                                : <Avatar />}
+                                : <Avatar/>}
                         </IconButton>
                         <Menu
                             id="menu-appbar"
@@ -97,33 +98,40 @@ export default function Header() {
                             {isAuthenticated ?
                                 [<MenuItem key={"profile"} onClick={() => {
                                     navigate("user");
+                                    setAnchorEl(null);
                                 }
                                 }>Profile</MenuItem>,
-                                <MenuItem key="logout" onClick={logout}>Logout</MenuItem>]
+                                    <MenuItem key="logout" onClick={() => {
+                                        logout();
+                                        setAnchorEl(null);
+                                    }
+                                    }>Logout</MenuItem>]
                                 :
                                 <MenuItem key="login" onClick={() => {
                                     navigate("login")
+                                    setAnchorEl(null);
                                 }}>Login</MenuItem>
                             }
                         </Menu>
                     </div>
                 </Toolbar>
                 <SwipeableDrawer open={open} onOpen={() => setOpen(true)} onClose={() => setOpen(false)}>
-                    <Toolbar sx={{ minWidth: 250, maxWidth: 'md', display: "flex", justifyContent: "flex-end" }}>
+                    <Toolbar sx={{minWidth: 250, maxWidth: 'md', display: "flex", justifyContent: "flex-end"}}>
                         <IconButton
                             size="large"
                             onClick={() => setOpen(false)}
                             color="inherit">
-                            <ChevronLeftIcon  />
+                            <ChevronLeftIcon/>
                         </IconButton>
                     </Toolbar>
-                    <Divider />
+                    <Divider/>
                     <List>
                         {
                             navigationLinks.map(link => (
                                 <ListItem key={link.link}>
                                     <Typography variant="button" display="block" gutterBottom>
-                                        <Link key={link.link} to={link.link} color="inherit" sx={{ textDecoration: "none" }}>{link.name}</Link>
+                                        <Link key={link.link} to={link.link} onClick={handleClose} color="inherit"
+                                              sx={{textDecoration: "none"}}>{link.name}</Link>
                                     </Typography>
                                 </ListItem>
                             ))
