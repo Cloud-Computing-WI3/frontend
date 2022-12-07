@@ -15,7 +15,7 @@ export default function LoginPage() {
     }
 
     useEffect(() => {
-        if (!user) {
+        if (!user && !localStorage.getItem("user")) {
             const initClient = () => {
                 gapi.client.init({
                     clientId: googleClientId,

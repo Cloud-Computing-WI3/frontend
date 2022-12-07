@@ -22,10 +22,9 @@ export default function Header() {
     // drawer navigation links
     const navigationLinks = [
         {name: "Top Articles", link: "/"},
-        // keywords page --> testwise for keywords 'etf' and 'apple'
-        {name: "My Keywords", link: "/keywords/etf,apple"},
+        {name: "My Keywords", link: "/my/keywords"},
         // my categories --> testwise for keywords 'health' and 'sports'
-        {name: "My Categories", link: "/my_categories/health,sports"},
+        {name: "My Categories", link: "/my/categories"},
         // category pages
         {name: "Technology", link:"/categories/technology"},
         {name: "Sports", link: "/categories/sports"},

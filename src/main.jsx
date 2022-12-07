@@ -15,6 +15,7 @@ import NewsPage from "./pages/NewsPage";
 import {Articles} from "./utils/apis/news_feed/articles.js";
 import {ArticlesByKeywords} from "./utils/apis/news_feed/articles_by_keywords.js";
 import {ArticlesByCategories} from "./utils/apis/news_feed/articles_by_categories.js";
+import {Accounts} from "./utils/apis/profile_management/accounts.js";
 
 
 const router = createBrowserRouter([
@@ -36,32 +37,54 @@ const router = createBrowserRouter([
                 },
             },
             {
-                path: "/categories/:categoryName",
-                element: <NewsPage/>,
-                loader: ({params}) => {
-                    return Articles.get({category_name: params.categoryName, elastic_pointer: null}).then(res => {
-                        return res;
+                path: "/my/keywords",
+                element: <NewsPage title={"My keywords"}/>,
+                loader: () => {
+                    return Accounts.getKeywords().then(keywords => {
+                        const keywordNames = keywords.map(c => c.name).join(",");
+                        if(keywordNames.length > 0) {
+                            return ArticlesByKeywords.get({keywords: keywordNames, elastic_pointer: null}).then(res => {
+                                return res;
+                            }).catch(e => {
+                                console.log(e);
+                                return [];
+                            })
+                        }else {
+                            return [];
+                        }
                     }).catch(e => {
                         console.log(e);
+                        return []
                     })
                 },
             },
             {
-                path: "/keywords/:keywords",
-                element: <NewsPage />,
-                loader: ({params}) => {
-                    return ArticlesByKeywords.get({keywords: params.keywords, elastic_pointer: null}).then(res => {
-                        return res;
+                path: "/my/categories",
+                element: <NewsPage title={"My categories"}/>,
+                loader: () => {
+                    return Accounts.getCategories().then(categories => {
+                        const categoryNames = categories.map(c => c.name).join(",");
+                        if(categoryNames.length > 0) {
+                            return ArticlesByCategories.get({categories: categoryNames, elastic_pointer: null}).then(res => {
+                                return res;
+                            }).catch(e => {
+                                console.log(e);
+                                return [];
+                            })
+                        }else {
+                            return [];
+                        }
                     }).catch(e => {
                         console.log(e);
+                        return []
                     })
-                }
+                },
             },
             {
-                path: "/my_categories/:categories",
+                path: "/categories/:categoryName",
                 element: <NewsPage/>,
                 loader: ({params}) => {
-                    return ArticlesByCategories.get({categories: params.categories, elastic_pointer: null}).then(res => {
+                    return Articles.get({category_name: params.categoryName, elastic_pointer: null}).then(res => {
                         return res;
                     }).catch(e => {
                         console.log(e);

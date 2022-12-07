@@ -1,9 +1,19 @@
 import {Box, Grid, Typography} from "@mui/material";
 import MediaCard from "../components/MediaCard";
 import {useLoaderData} from "react-router-dom";
+import {useLoader} from "../utils/providers/LoadingProvider.jsx";
+import {useEffect} from "react";
 
 export default function HomePage() {
     const data = useLoaderData();
+    const {setLoading} = useLoader();
+    useEffect(() => {
+        if(!data) {
+            setLoading(true);
+        }else {
+            setLoading(false);
+        }
+    }, [data])
     return (
         <Box sx={{p: 2}}>
             <Typography variant="h1">Top Articles</Typography>

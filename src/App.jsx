@@ -5,18 +5,19 @@ import Header from "./layout/Header";
 import Content from "./layout/Content";
 import {AccountProvider} from "./utils/providers/AccountProvider.jsx";
 import {MessageProvider} from "./utils/providers/MessageProvider";
+import {LoadingProvider} from "./utils/providers/LoadingProvider.jsx";
 
 function App(props) {
     return (
         <ThemeProvider theme={theme}>
-            <MessageProvider>
-                <AccountProvider>
-                    <Header/>
-                    <Content>
-                        {props.children ? props.children : <Outlet/>}
-                    </Content>
-                </AccountProvider>
-            </MessageProvider>
+            <LoadingProvider>
+                <MessageProvider>
+                    <AccountProvider>
+                        <Header/>
+                        <Content />
+                    </AccountProvider>
+                </MessageProvider>
+            </LoadingProvider>
         </ThemeProvider>
     );
 }
