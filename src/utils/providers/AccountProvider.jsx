@@ -2,7 +2,7 @@ import React, {createContext, useContext, useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {Auth} from "../apis/profile_management/authentication.js";
 import {useMessage} from "./MessageProvider";
-import {useGoogleLogout} from "react-google-login";
+import {useGoogleLogout} from "@leecheuk/react-google-login";
 
 
 export const AccountContext = createContext();
