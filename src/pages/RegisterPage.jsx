@@ -20,8 +20,8 @@ export default function RegisterPage() {
             given_name: Yup.string().required("Required"),
             family_name: Yup.string().required("Required"),
             email: Yup.string().email("Invalid email address").required("Required"),
-            password1: Yup.string().required("Required").oneOf([Yup.ref("password2"), null], "Passwords must match"),
-            password2: Yup.string().required("Required").oneOf([Yup.ref("password1"), null], "Passwords must match"),
+            password: Yup.string().required("Required").oneOf([Yup.ref("password2"), null], "Passwords must match"),
+            password2: Yup.string().required("Required").oneOf([Yup.ref("password"), null], "Passwords must match"),
         }), onSubmit: (values) => {
             const formData = new FormData();
             for (const [key, value] of Object.entries(values)) {
@@ -85,13 +85,13 @@ export default function RegisterPage() {
                 <Grid item container spacing={2}>
                     <Grid item xs={12}>
                         <TextField
-                            name="password1"
+                            name="password"
                             type="password"
                             label="Password"
                             onChange={registrationForm.handleChange}
-                            value={registrationForm.values.password1}
-                            error={!!registrationForm.errors.password1}
-                            helperText={registrationForm.errors.password1}
+                            value={registrationForm.values.password}
+                            error={!!registrationForm.errors.password}
+                            helperText={registrationForm.errors.password}
                             fullWidth
                             required
                         />
@@ -120,7 +120,7 @@ export default function RegisterPage() {
                             variant="contained"
                             component="label"
                         >
-                            Upload Avatar
+                            Upload Picture
                             <input
                                 type="file"
                                 hidden
@@ -128,7 +128,7 @@ export default function RegisterPage() {
                                     if (e.target.files) {
                                         const objectUrl = URL.createObjectURL(e.target.files[0]);
                                         setFilePreview(objectUrl);
-                                        registrationForm.setFieldValue("avatar", e.target.files[0]);
+                                        registrationForm.setFieldValue("picture", e.target.files[0]);
                                     }
                                 }}
                             />

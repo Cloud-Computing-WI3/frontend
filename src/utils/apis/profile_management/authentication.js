@@ -16,7 +16,7 @@ const requests = {
         }).then(responseBody)
     },
     register: (account) => {
-        return ProfileManagement.post("auth/registration/", account, {
+        return ProfileManagement.post("accounts/registration/", account, {
             headers: {
                 "Content-Type": "multipart/form-data",
             }

@@ -28,6 +28,7 @@ const router = createBrowserRouter([
                         return res;
                     }).catch(e => {
                         console.log(e);
+                        return null;
                     })
                 },
             },

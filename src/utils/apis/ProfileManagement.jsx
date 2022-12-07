@@ -1,9 +1,10 @@
 import axios from "axios";
 import {Auth} from "./profile_management/authentication.js";
 
+// baseURL: "https://profile-management-2qda3nwega-uc.a.run.app",
 
 export const ProfileManagement = axios.create({
-    baseURL: "https://profile-management-2qda3nwega-uc.a.run.app",
+    baseURL: "http://localhost:8000",
     timeout: 15000,
     headers: {}
 });
@@ -32,7 +33,7 @@ ProfileManagement.interceptors.response.use(
 
         if (originalConfig.url !== "/auth/login/" && err.response) {
             // Access Token was expired
-            if ((err.response.status === 401 && !originalConfig._retry) || (err.response.status === 403 && !originalConfig._retry)) {
+            if ((err.response.status === 401 && !originalConfig._retry) || (err.response.status === 403 && !originalConfig._retry)|| (err.response.status === 401 && !originalConfig._retry)) {
                 if (localStorage.getItem("user")) {
                     originalConfig._retry = true;
                     try {
@@ -40,7 +41,6 @@ ProfileManagement.interceptors.response.use(
                         if (refreshToken) {
                             Auth.refresh(refreshToken)
                                 .then((token) => {
-                                    console.log("REFRESH", token);
                                     localStorage.setItem("access", token.access);
                                     originalConfig.headers["Authorization"] = `Bearer ${token.access}`;
                                 })
