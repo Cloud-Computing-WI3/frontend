@@ -11,8 +11,11 @@ import UserPage from "./pages/user/UserPage";
 import LoginPage from "./pages/LoginPage";
 import RequireAuthRoute from "./layout/RequireAuthRoute";
 import RegisterPage from "./pages/RegisterPage";
-import {Articles} from "./utils/apis/news_feed/articles.js";
 import NewsPage from "./pages/NewsPage";
+import {Articles} from "./utils/apis/news_feed/articles.js";
+import {ArticlesByKeywords} from "./utils/apis/news_feed/articles_by_keywords.js";
+import {ArticlesByCategories} from "./utils/apis/news_feed/articles_by_categories.js";
+
 
 const router = createBrowserRouter([
     {
@@ -33,10 +36,32 @@ const router = createBrowserRouter([
                 },
             },
             {
-                path: ":categoryName",
-                element: <NewsPage />,
+                path: "/categories/:categoryName",
+                element: <NewsPage/>,
                 loader: ({params}) => {
                     return Articles.get({category_name: params.categoryName, elastic_pointer: null}).then(res => {
+                        return res;
+                    }).catch(e => {
+                        console.log(e);
+                    })
+                },
+            },
+            {
+                path: "/keywords/:keywords",
+                element: <NewsPage />,
+                loader: ({params}) => {
+                    return ArticlesByKeywords.get({keywords: params.keywords, elastic_pointer: null}).then(res => {
+                        return res;
+                    }).catch(e => {
+                        console.log(e);
+                    })
+                }
+            },
+            {
+                path: "/my_categories/:categories",
+                element: <NewsPage/>,
+                loader: ({params}) => {
+                    return ArticlesByCategories.get({categories: params.categories, elastic_pointer: null}).then(res => {
                         return res;
                     }).catch(e => {
                         console.log(e);
