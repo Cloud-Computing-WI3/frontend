@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 
 export default function MediaCard(props) {
     return (
-        <Card>
+        <Card style={{ maxWidth: 345 }}>
             <CardMedia
                 component="img"
                 height="140"
@@ -16,20 +16,26 @@ export default function MediaCard(props) {
                 alt={props.alt}
             />
             <CardContent>
-                <Typography gutterBottom variant="h5" component="div">
+                <Typography gutterBottom variant="h5" component="h2">
                     {props.title ? props.title : props.author !== "" && props.author !== null ? props.author : "Headline"}
                 </Typography>
-                <Typography variant="body2" color="text.secondary">
+                <Typography variant="body2" color="textSecondary" component="p">
                     {props.description}
                 </Typography>
             </CardContent>
             <CardActions>
-                <a href={props.url} target="_blank" rel="noreferrer">
                 <Button
-                    
-                    size="small">{props.primaryLinkTxt ? props.primaryLinkTxt : "Read Article"}
+                    component="a"
+                    href={props.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    size="small"
+                    variant="contained"
+                    color="primary"
+                >
+                    {props.primaryLinkTxt ? props.primaryLinkTxt : "Read Article"}
                 </Button>
-                </a>
+
                 <Button
                     component={Link}
                     href={props.secondaryLink ? props.secondaryLink : props.url}
@@ -40,5 +46,5 @@ export default function MediaCard(props) {
     );
 }
 
- 
- 
+
+
