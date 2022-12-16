@@ -8,14 +8,14 @@ import { Link } from 'react-router-dom';
 
 export default function MediaCard(props) {
     return (
-        <Card style={{ maxWidth: 345 }}>
+        <Card style={{ maxWidth: 345, }}>
             <CardMedia
                 component="img"
                 height="140"
                 image={props.urlToImage}
                 alt={props.alt}
             />
-            <CardContent>
+            <CardContent style={{ height:'100%'}}>
                 <Typography gutterBottom variant="h5" component="h2">
                     {props.title ? props.title : props.author !== "" && props.author !== null ? props.author : "Headline"}
                 </Typography>

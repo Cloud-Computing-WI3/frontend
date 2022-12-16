@@ -1,5 +1,5 @@
 import { createTheme } from "@mui/material";
-import { blue } from '@mui/material/colors';
+import { grey } from '@mui/material/colors';
 import { Link as RouterLink } from "react-router-dom";
 import { forwardRef } from "react";
 import 'reset-css';
@@ -11,7 +11,7 @@ const LinkBehavior = forwardRef((props, ref) => (
 const theme = createTheme({
     palette: {
         primary: {
-            main: blue[500],
+            main: grey[900],
         }
     },
     typography: {
