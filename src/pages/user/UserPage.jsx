@@ -54,7 +54,7 @@ export default function UserPage() {
                             return (
                                 <form onSubmit={handleSubmit}>
                                     <Grid item xs={3} md={1}>
-                                        <Avatar src={user.picture} alt="User avatar"
+                                        <Avatar src={user.picture} alt="User avatar" shape="circle" p={2} variant="outlined"
                                                 sx={{width: "100%", height: "auto"}}/>
                                     </Grid>
                                     <Grid item container xs={9} md={11} spacing={3}>
