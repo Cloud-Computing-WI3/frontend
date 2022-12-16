@@ -124,7 +124,7 @@ export default function Header() {
                             navigationLinks.map(link => (
                                 <ListItem key={link.link}>
                                     <Typography variant="button" display="block" gutterBottom>
-                                        <Link key={link.link} to={link.link} color="inherit" sx={{ textDecoration: "none" }}>{link.name}</Link>
+                                        <Link  key={link.link} to={link.link} color="inherit" sx={{ textDecoration: "none" }} onClick={() => setOpen(false)}>{link.name}</Link>
                                     </Typography>
                                 </ListItem>
                             ))
