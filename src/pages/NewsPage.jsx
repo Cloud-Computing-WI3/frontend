@@ -1,7 +1,7 @@
 import { Typography, Grid } from "@mui/material";
 import MediaCard from "../components/MediaCard";
 import { useLoaderData, useParams } from "react-router-dom";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { Articles } from "../utils/apis/news_feed/articles.js";
 import { ArticlesByKeywords } from "../utils/apis/news_feed/articles_by_keywords.js";
 import { ArticlesByCategories } from "../utils/apis/news_feed/articles_by_categories.js";
@@ -80,10 +80,10 @@ export default function NewsPage() {
                         visible={true}
                     />
                 }>
-                <Grid key={headline} container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+                <Grid key={headline} container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3, lg: 4, xlg: 5 }}>
                     {
                         articles.map(article => (
-                            <Grid item xs={12} sm={6} md={3} key={article.publishedAt}>
+                            <Grid item xs={12} sm={6} md={3} lg={4} key={article.publishedAt}>
                                 <MediaCard key={data.id} {...article}></MediaCard>
                             </Grid>))
                     }
