@@ -5,29 +5,24 @@
     flex-direction: column;
     align-items: flex-start;
     justify-content: space-between;
-  }
-  
-  .cardMedia {
+}
+
+.cardMedia {
     min-height: 140px;
-  }
-  
-  .cardContent {
+}
+
+.cardContent {
     height: 100%;
-  }
-  
-  .title {
-  
-  }
-  
-  .description {
-  
-  }
-  
-  .cardActions {
-  
-  }
-  
-  .primaryLink:hover {
+}
+
+.title {}
+
+.description {
+}
+
+.cardActions {}
+
+.primaryLink:hover {
     background-color: #3f51b5 !important;
-    
-  }
+
+}

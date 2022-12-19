@@ -137,6 +137,13 @@ const theme = createTheme({
                 },
             },
         },
+        MuiCardMedia: {
+            styleOverrides: {
+                root: {
+                    objectFit: 'contain',
+                },
+            },
+        }
         
         
     }
