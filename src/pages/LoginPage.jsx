@@ -3,6 +3,7 @@ import {useEffect, useState} from "react";
 import {useAccount} from "../utils/providers/AccountProvider.jsx";
 import {gapi} from "gapi-script";
 import {GoogleLogin} from "@leecheuk/react-google-login";
+import {useLoader} from "../utils/providers/LoadingProvider.jsx";
 
 export default function LoginPage() {
     const [email, setEmail] = useState("");
@@ -24,7 +25,7 @@ export default function LoginPage() {
             };
             gapi.load('client:auth2', initClient);
         }
-    });
+    }, []);
     const onSuccess = (res) => {
         googleLogin(res.accessToken, res.googleId, res.tokenId);
     };

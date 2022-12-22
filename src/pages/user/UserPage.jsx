@@ -1,3 +1,4 @@
+import React from "react";
 import {Avatar, Button, Chip, Grid, TextField, Typography} from "@mui/material";
 import {useAccount} from "../../utils/providers/AccountProvider.jsx";
 import {useEffect, useState} from "react";
@@ -8,11 +9,14 @@ import {Formik} from "formik";
 import * as Yup from "yup";
 import {useLoader} from "../../utils/providers/LoadingProvider.jsx";
 import {Keywords} from "../../utils/apis/profile_management/keywords.js";
+import Autocomplete from '@mui/material/Autocomplete';
+import CircularProgress from "@mui/material/CircularProgress";
+import KeywordAutocomplete from "../../components/KeywordAutocomplete.jsx";
 
 export default function UserPage() {
     const {user, setUser} = useAccount();
     const {setMessage} = useMessage();
-    const {setLoading} = useLoader();
+    const {setLoading, isLoading} = useLoader();
     const [categories, setCategories] = useState([]);
     const [keywords, setKeywords] = useState([]);
     useEffect(() => {
@@ -108,6 +112,11 @@ export default function UserPage() {
                                             <Typography variant="h1">My categories</Typography>
                                         </Grid>
                                         <Grid item xs={12} container spacing={2}>
+                                            {isLoading ?
+                                                <Grid item xs={12}>
+                                                    <CircularProgress color="inherit" size={40} />
+                                                </Grid>
+                                                    : null}
                                             {categories && categories.map(category => (
                                                 <Grid item key={category.id}>
                                                     <Chip
@@ -135,6 +144,12 @@ export default function UserPage() {
                                             <Typography variant="h1">My keywords</Typography>
                                         </Grid>
                                         <Grid item xs={12} container spacing={2}>
+                                            <Grid item xs={12}>
+                                                <KeywordAutocomplete onChange={(value) => setFieldValue("keywords", value)} keywords={keywords} userKeywords={user.keywords}  />
+                                            </Grid>
+
+                                        </Grid>
+                                        {/*<Grid item xs={12} container spacing={2}>
                                             {keywords && keywords.map(keyword => (
                                                 <Grid item key={keyword.id}>
                                                     <Chip
@@ -156,7 +171,7 @@ export default function UserPage() {
                                                     />
                                                 </Grid>
                                             ))}
-                                        </Grid>
+                                        </Grid>*/}
                                     </Grid>
                                     <Grid item xs={12} sx={{mt: 3}}>
                                         <Button disabled={isSubmitting} size="large" variant="contained" color="primary"

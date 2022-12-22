@@ -14,7 +14,7 @@ export default function Content(props) {
                 {props.children ? props.children : <Outlet/>}
             </Box>
             {message && <Message />}
-            {isLoading && <LoadingScreen />}
+            {/*{isLoading && <LoadingScreen />}*/}
         </>
 
     )
