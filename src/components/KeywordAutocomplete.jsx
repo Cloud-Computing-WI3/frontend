@@ -1,19 +1,32 @@
 import Autocomplete, {createFilterOptions} from '@mui/material/Autocomplete';
 import {useLoader} from "../utils/providers/LoadingProvider.jsx";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import CircularProgress from "@mui/material/CircularProgress";
 import TextField from '@mui/material/TextField';
+import {GoogleCategories} from "../utils/apis/news_feed/google_categories.js";
 
 const filter = createFilterOptions();
 export default function KeywordAutocomplete(props) {
-    const {isLoading} = useLoader();
-    const [value, setValue] = useState(props.userKeywords);
+    const [value, setValue] = useState(props.userKeywords.map(kW => {return ({category: "My keywords", name: kW.name, id: kW.id})}));
+    const initOptions = value.concat(props.keywords.filter(kW => !value.some(v => v.id === kW.id)));
+    const [googleCategories, setGoogleCategories] = useState([]);
+    const [options, setOptions] = useState(initOptions.concat(googleCategories));
+    useEffect(() => {
+        setLoading(true);
+        GoogleCategories.get().then(categories => {
+            const c = categories.sort((a, b) => -b.category.localeCompare(a.category))
+            setOptions(options.concat(c));
+            setLoading(false);
+        })
+    }, [])
+    const {isLoading, setLoading} = useLoader();
     return (
         <Autocomplete
             multiple
             limitTags={5}
-            options={value.concat(props.keywords.filter(kW => !value.some(v => v.id === kW.id)))}
+            options={options}
             value={value}
+            groupBy={(option) => option.category}
             getOptionLabel={(option) => option.name}
             loading={isLoading}
             onChange={(event, newValue) => {
@@ -38,6 +51,7 @@ export default function KeywordAutocomplete(props) {
                 const isExisting = options.some((option) => inputValue === option.name);
                 if (inputValue !== '' && !isExisting) {
                     filtered.push({
+                        category: "Add new",
                         name: inputValue,
                     });
                 }
