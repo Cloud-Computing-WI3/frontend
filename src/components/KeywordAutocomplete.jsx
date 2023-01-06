@@ -61,7 +61,7 @@ export default function KeywordAutocomplete(props) {
             clearOnBlur
             handleHomeEndKeys
             renderOption={(renderProps, option) => {
-                if(value.some((val) => val.id === option.id || val.name === option.name)) {
+                if(value.some((val) => val.name === option.name)) {
                     renderProps["aria-selected"] = true;
                     renderProps["aria-disabled"] = true;
                 }
