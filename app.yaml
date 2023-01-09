@@ -1,10 +1,18 @@
 runtime: nodejs16
+env: standard
+instance_class: F1
 handlers:
-  # Serve all static files with url ending with a file extension
   - url: /(.*\..+)$
     static_files: dist/\1
     upload: dist/(.*\..+)$
-  # Catch all handler to index.html
   - url: /.*
     static_files: dist/index.html
     upload: dist/index.html
+  - url: .*
+    script: auto
+automatic_scaling:
+  min_idle_instances: automatic
+  max_idle_instances: automatic
+  min_pending_latency: automatic
+  max_pending_latency: automatic
+service_account: cohesive-slate-368310@appspot.gserviceaccount.com

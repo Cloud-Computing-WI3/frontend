@@ -2,7 +2,8 @@ import React, {createContext, useContext, useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {Auth} from "../apis/profile_management/authentication.js";
 import {useMessage} from "./MessageProvider";
-import {useGoogleLogout} from "react-google-login";
+import {useGoogleLogout} from "@leecheuk/react-google-login";
+import {useLoader} from "./LoadingProvider.jsx";
 
 
 export const AccountContext = createContext();
@@ -15,12 +16,14 @@ function AccountProvider (props) {
     const [accessToken, setAccessToken] = useState(localStorage.getItem("access"));
     const navigate = useNavigate();
     const {setMessage} = useMessage();
+    const {setLoading} = useLoader();
     const googleClientId = "336520046482-27egm1na9kpsnru77n8dgbm89a9uoqkn.apps.googleusercontent.com";
     const {signOut} = useGoogleLogout({
         googleClientId
     });
 
     function googleLogin(token, googleId, tokenId) {
+        setLoading(true);
         Auth.googleLogin(token, googleId, tokenId)
             .then((data) => {
                 localStorage.setItem("access", data.access_token);
@@ -33,6 +36,7 @@ function AccountProvider (props) {
                 setUser(data.user);
                 localStorage.setItem("user", JSON.stringify(data.user));
                 setIsAuthenticated(true);
+                setLoading(false);
                 navigate("/");
                 setMessage({
                     code: 200,
@@ -40,10 +44,14 @@ function AccountProvider (props) {
                     show: true,
                     status: "success"
                 });
-            })
+            }).catch(e => {
+            setMessage({code: e.response.status, text: e.response.data.detail, show: true, status: "error"});
+            setLoading(false);
+        })
 
     }
     function login(username, password) {
+        setLoading(true);
         Auth.login(username, password)
             .then((data) => {
                 localStorage.setItem("access", data.access_token);
@@ -56,6 +64,7 @@ function AccountProvider (props) {
                 setUser(data.user);
                 localStorage.setItem("user", JSON.stringify(data.user));
                 setIsAuthenticated(true);
+                setLoading(false);
                 navigate("/");
                 setMessage({
                     code: 200,
@@ -65,8 +74,8 @@ function AccountProvider (props) {
                 });
             })
             .catch((e) => {
-                console.log(e);
                 setMessage({code: e.response.status, text: e.response.data.detail, show: true, status: "error"});
+                setLoading(false);
             });
     }
 
@@ -97,6 +106,7 @@ function AccountProvider (props) {
 
 
     function logout() {
+        signOut();
         localStorage.removeItem("refresh");
         localStorage.removeItem("access");
         localStorage.removeItem("user");
@@ -104,7 +114,6 @@ function AccountProvider (props) {
         setAccessToken("");
         setIsAuthenticated(false);
         setUser();
-        signOut();
         navigate("/login");
         setMessage({
             code: 200,

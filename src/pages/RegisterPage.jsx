@@ -6,10 +6,12 @@ import {useNavigate} from "react-router-dom";
 import {Avatar, Button, Grid, TextField} from "@mui/material";
 import {useState} from "react";
 import {Auth} from "../utils/apis/profile_management/authentication.js";
+import {useLoader} from "../utils/providers/LoadingProvider.jsx";
 
 
 export default function RegisterPage() {
     const [filePreview, setFilePreview] = useState("");
+    const {setLoading} = useLoader();
     const {setMessage} = useMessage();
     const navigate = useNavigate();
 
@@ -23,6 +25,7 @@ export default function RegisterPage() {
             password: Yup.string().required("Required").oneOf([Yup.ref("password2"), null], "Passwords must match"),
             password2: Yup.string().required("Required").oneOf([Yup.ref("password"), null], "Passwords must match"),
         }), onSubmit: (values) => {
+            setLoading(true);
             const formData = new FormData();
             for (const [key, value] of Object.entries(values)) {
                 formData.append(key, value);
@@ -35,8 +38,8 @@ export default function RegisterPage() {
                 for (const [key, value] of Object.entries(res)) {
                     registrationForm.setFieldError(key, value);
                 }
-
             });
+            setLoading(false);
         },
     });
     return (<>
