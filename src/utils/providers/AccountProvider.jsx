@@ -123,7 +123,7 @@ function AccountProvider (props) {
         });
     }
     useEffect(() => {
-        if (localStorage.getItem("refresh") !== null && !isAuthenticated && localStorage.getItem("user")) {
+        if (localStorage.getItem("refresh") !== null && localStorage.getItem("user")) {
             refreshUser();
         }
     }, []);
