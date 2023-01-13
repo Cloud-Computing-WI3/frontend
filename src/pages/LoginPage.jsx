@@ -2,8 +2,8 @@ import {Button, Grid, Link, TextField, Typography} from "@mui/material";
 import {useEffect, useState} from "react";
 import {useAccount} from "../utils/providers/AccountProvider.jsx";
 import {gapi} from "gapi-script";
-import {GoogleLogin} from "@leecheuk/react-google-login";
-import {useLoader} from "../utils/providers/LoadingProvider.jsx";
+import {GoogleLogin} from "react-google-login";
+import "./LoginPage.css"
 
 export default function LoginPage() {
     const [email, setEmail] = useState("");
@@ -16,7 +16,7 @@ export default function LoginPage() {
     }
 
     useEffect(() => {
-        if (!user && !localStorage.getItem("user")) {
+        if (!user) {
             const initClient = () => {
                 gapi.client.init({
                     clientId: googleClientId,
@@ -25,7 +25,7 @@ export default function LoginPage() {
             };
             gapi.load('client:auth2', initClient);
         }
-    }, []);
+    });
     const onSuccess = (res) => {
         googleLogin(res.accessToken, res.googleId, res.tokenId);
     };
@@ -48,17 +48,16 @@ export default function LoginPage() {
             </Grid>
             <Grid item xs={12} container spacing={2} sx={{justifyContent: {xs: "space-between", md: "center"}}}>
                 <Grid item>
-                    <Link to="/register">No account yet? Sign Up!</Link>
+                    <Link className="link" to="/register">No account yet? Sign Up!</Link>
                 </Grid>
-                <Grid item>
-                    <Link to="#">Forgot password?</Link>
-                </Grid>
+                
             </Grid>
             <Grid item xs={12}>
-                <Button variant="contained" onClick={handleLogin} fullWidth>Login</Button>
+                <Button variant="contained" className="login-button" onClick={handleLogin} fullWidth>Login</Button>
             </Grid>
             <Grid item xs={12}>
                 <GoogleLogin
+                    className="google-login"
                     clientId={googleClientId}
                     buttonText="Sign in with Google"
                     onSuccess={onSuccess}

@@ -7,6 +7,7 @@ import { ArticlesByKeywords } from "../utils/apis/news_feed/articles_by_keywords
 import { ArticlesByCategories } from "../utils/apis/news_feed/articles_by_categories.js";
 import { ThreeDots } from  'react-loader-spinner'
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { useLocation } from "react-router-dom";
 
 export default function NewsPage() {
     const data = useLoaderData();
@@ -14,47 +15,63 @@ export default function NewsPage() {
     const [headline, setHeadline] = useState(undefined)
     const [articles, setArticles] = useState(data.articles || []);
     const [new_elastic_pointer, setNewElasticPointer] = useState(data.elastic_pointer || null);
-    const [page, setPage] = useState(1)
+    const [articleLen, setArticleLen] = useState(0)
+    const location = useLocation()
+
+
+    function useFilterArticles(articles) {
+        const [filteredArticles, setFilteredArticles] = useState([]);
+
+        useEffect(() => {
+            if (articles !== undefined) {
+                const publishedAtSet = new Set(articles.map(object => object.publishedAt));
+                const filteredArticles = [];
+                for (const article of articles) {
+                    if (publishedAtSet.has(article.publishedAt)) {
+                        filteredArticles.push(article);
+                        publishedAtSet.delete(article.publishedAt);
+                    }
+                }
+                setFilteredArticles(filteredArticles);
+                setArticleLen(filteredArticles.length)
+            }
+            }, [articles]);
+        return filteredArticles;
+    }
 
     useEffect(() => {
         if (params.categoryName) {
             setHeadline(params.categoryName[0].toUpperCase() + params.categoryName.substring(1))
             setArticles(data.articles)
-            setPage(1)
-        } else if (params.keywords) {
-            setHeadline(`My keywords (${params.keywords})`)
+        } else if (location.pathname === '/my/keywords') {
+            setHeadline(`My keywords`)
             setArticles(data.articles)
-            setPage(1)
-        } else if (params.categories) {
-            setHeadline(`My categories (${params.categories})`)
+        } else if (location.pathname === '/my/categories') {
+            setHeadline(`My categories`)
             setArticles(data.articles)
-            setPage(1)
         }
-    }, [params]);
+    }, [data, params]);
+
 
     const loadMore = () => {
          if (params.categoryName) {
             Articles.get({ category_name: params.categoryName, elastic_pointer: new_elastic_pointer }).then(res => {
                 setArticles([...articles, ...res.articles]);
                 setNewElasticPointer(res.elastic_pointer);
-                setPage(page+1)
             }).catch(e => {
                 console.error(e);
             })
-        } else if (params.keywords) {
+        } else if (location.pathname === '/my/keywords') {
             ArticlesByKeywords.get({ keywords: params.keywords, elastic_pointer: new_elastic_pointer }).then(res => {
                 setArticles([...articles, ...res.articles]);
                 setNewElasticPointer(res.elastic_pointer);
-                setPage(page+1)
             }).catch(e => {
                 console.error(e);
             })
-        } else if (params.categories) {
+        } else if (location.pathname === '/my/categories') {
             ArticlesByCategories.get({ categories: params.categories, elastic_pointer: new_elastic_pointer }).then(res => {
-                console.log(res)
                 setArticles([...articles, ...res.articles]);
                 setNewElasticPointer(res.elastic_pointer);
-                setPage(page+1)
             }).catch(e => {
                 console.error(e);
             })
@@ -65,7 +82,7 @@ export default function NewsPage() {
         <>
             <Typography variant="h1" sx={{ m: 2 }}>{headline}</Typography>
             <InfiniteScroll ref={(scroll) => scroll}
-                dataLength={page * 20}
+                dataLength={articleLen}
                 next={loadMore}
                 hasMore={true}
                 loader={
@@ -82,7 +99,7 @@ export default function NewsPage() {
                 }>
                 <Grid key={headline} container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3, lg: 4, xlg: 5 }}>
                     {
-                        articles.map(article => (
+                        useFilterArticles(articles).map(article => (
                             <Grid item xs={12} sm={6} md={3} lg={4} key={article.publishedAt}>
                                 <MediaCard key={data.id} {...article}></MediaCard>
                             </Grid>))
