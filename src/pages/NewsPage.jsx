@@ -8,75 +8,79 @@ import { ArticlesByCategories } from "../utils/apis/news_feed/articles_by_catego
 import { ThreeDots } from  'react-loader-spinner'
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useLocation } from "react-router-dom";
+import { Accounts } from "../utils/apis/profile_management/accounts.js";
 
 export default function NewsPage() {
     const data = useLoaderData();
     const params = useParams();
     const [headline, setHeadline] = useState(undefined)
     const [articles, setArticles] = useState(data.articles || []);
-    const [new_elastic_pointer, setNewElasticPointer] = useState(data.elastic_pointer || null);
-    const [articleLen, setArticleLen] = useState(0)
+    const [new_elastic_pointer, setNewElasticPointer] = useState(data.elastic_pointer);
+    const [articleLen, setArticleLen] = useState(data.articles.length || 0)
     const location = useLocation()
-
-
-    function useFilterArticles(articles) {
-        const [filteredArticles, setFilteredArticles] = useState([]);
-
-        useEffect(() => {
-            if (articles !== undefined) {
-                const publishedAtSet = new Set(articles.map(object => object.publishedAt));
-                const filteredArticles = [];
-                for (const article of articles) {
-                    if (publishedAtSet.has(article.publishedAt)) {
-                        filteredArticles.push(article);
-                        publishedAtSet.delete(article.publishedAt);
-                    }
-                }
-                setFilteredArticles(filteredArticles);
-                setArticleLen(filteredArticles.length)
-            }
-            }, [articles]);
-        return filteredArticles;
-    }
 
     useEffect(() => {
         if (params.categoryName) {
             setHeadline(params.categoryName[0].toUpperCase() + params.categoryName.substring(1))
+            setArticleLen(data.articles.length)
             setArticles(data.articles)
+            setNewElasticPointer(data.elastic_pointer)
         } else if (location.pathname === '/my/keywords') {
             setHeadline(`My keywords`)
+            setArticleLen(data.articles.length)
             setArticles(data.articles)
+            setNewElasticPointer(data.elastic_pointer)
         } else if (location.pathname === '/my/categories') {
             setHeadline(`My categories`)
+            setArticleLen(data.articles.length)
             setArticles(data.articles)
+            setNewElasticPointer(data.pointers)
         }
     }, [data, params]);
 
 
     const loadMore = () => {
-         if (params.categoryName) {
-            Articles.get({ category_name: params.categoryName, elastic_pointer: new_elastic_pointer }).then(res => {
-                setArticles([...articles, ...res.articles]);
-                setNewElasticPointer(res.elastic_pointer);
-            }).catch(e => {
-                console.error(e);
-            })
-        } else if (location.pathname === '/my/keywords') {
-            ArticlesByKeywords.get({ keywords: params.keywords, elastic_pointer: new_elastic_pointer }).then(res => {
-                setArticles([...articles, ...res.articles]);
-                setNewElasticPointer(res.elastic_pointer);
-            }).catch(e => {
-                console.error(e);
-            })
-        } else if (location.pathname === '/my/categories') {
-            ArticlesByCategories.get({ categories: params.categories, elastic_pointer: new_elastic_pointer }).then(res => {
-                setArticles([...articles, ...res.articles]);
-                setNewElasticPointer(res.elastic_pointer);
-            }).catch(e => {
-                console.error(e);
-            })
-        }
-    };
+    if (params.categoryName) {
+        Articles.get({category_name: params.categoryName, elastic_pointer: new_elastic_pointer}).then(res => {
+            const newArticles = [...articles, ...res.articles]
+            setArticles(newArticles);
+            setArticleLen(newArticles.length)
+            setNewElasticPointer(res.elastic_pointer);
+        }).catch(e => {
+            console.error(e);
+        })
+    } else if (location.pathname === '/my/keywords') {
+        Accounts.getKeywords().then(keywords => {
+            const keywordNames = keywords.map(c => c.name).join(",");
+            if (keywordNames.length > 0) {
+                ArticlesByKeywords.get({
+                    keywords: keywordNames,
+                    elastic_pointer: new_elastic_pointer
+                }).then(res => {
+                    const newArticles = [...articles, ...res.articles]
+                    setArticleLen(newArticles.length)
+                    setArticles(newArticles);
+                    setNewElasticPointer(res.elastic_pointer);
+                }).catch(e => {
+                    console.log(e);
+                })
+            }
+        }).catch(e => {
+            console.log(e);
+        })
+    } else if (location.pathname === '/my/categories') {
+        const nextBatchObject = Object.entries(new_elastic_pointer).map(([name, pointer]) => ({name, pointer}))
+        ArticlesByCategories.get(nextBatchObject).then(res => {
+            const newArticles = [...articles, ...res.articles]
+            setArticleLen(newArticles.length)
+            setArticles(newArticles);
+            setNewElasticPointer(res.pointers);
+        }).catch(e => {
+            console.log(e);
+        })
+
+    }
+}
 
     return (
         <>
@@ -99,7 +103,7 @@ export default function NewsPage() {
                 }>
                 <Grid key={headline} container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3, lg: 4, xlg: 5 }}>
                     {
-                        useFilterArticles(articles).map(article => (
+                        articles.map(article => (
                             <Grid item xs={12} sm={6} md={3} lg={4} key={article.publishedAt}>
                                 <MediaCard key={data.id} {...article}></MediaCard>
                             </Grid>))
