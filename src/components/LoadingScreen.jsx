@@ -46,6 +46,7 @@ export default function LoadingScreen(props) {
                     thickness={4}
                     {...props}
                 />
+                {props.message && props.message}
             </Box>
         </Box>
     )

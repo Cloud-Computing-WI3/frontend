@@ -16,15 +16,15 @@ function AccountProvider (props) {
     const [accessToken, setAccessToken] = useState(localStorage.getItem("access"));
     const navigate = useNavigate();
     const {setMessage} = useMessage();
-    const {setLoading} = useLoader();
+    const {setLoading, setLoadingMessage} = useLoader();
     const googleClientId = "336520046482-27egm1na9kpsnru77n8dgbm89a9uoqkn.apps.googleusercontent.com";
     const {signOut} = useGoogleLogout({
         googleClientId
     });
 
     function googleLogin(token, googleId, tokenId) {
-        setLoading(true);
-        Auth.googleLogin(token, googleId, tokenId)
+        setLoadingMessage("Signing in…");
+        setLoading(true);        Auth.googleLogin(token, googleId, tokenId)
             .then((data) => {
                 localStorage.setItem("access", data.access_token);
                 setAccessToken(data.access_token);
@@ -47,10 +47,12 @@ function AccountProvider (props) {
             }).catch(e => {
             setMessage({code: e.response.status, text: e.response.data.detail, show: true, status: "error"});
             setLoading(false);
+            setLoadingMessage("");
         })
 
     }
     function login(username, password) {
+        setLoadingMessage("Signing in…");
         setLoading(true);
         Auth.login(username, password)
             .then((data) => {
@@ -76,6 +78,7 @@ function AccountProvider (props) {
             .catch((e) => {
                 setMessage({code: e.response.status, text: e.response.data.detail, show: true, status: "error"});
                 setLoading(false);
+                setLoadingMessage("");
             });
     }
 
@@ -123,7 +126,7 @@ function AccountProvider (props) {
         });
     }
     useEffect(() => {
-        if (localStorage.getItem("refresh") !== null && !isAuthenticated && localStorage.getItem("user")) {
+        if (localStorage.getItem("refresh") !== null && localStorage.getItem("user")) {
             refreshUser();
         }
     }, []);

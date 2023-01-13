@@ -1,7 +1,7 @@
 import {NewsFeed, responseBody} from "../NewsFeed.jsx";
 
 // to avoid getting cached results set BYPASS_CACHE to true
-const BYPASS_CACHE = false
+const BYPASS_CACHE = true
 const cache_param = BYPASS_CACHE ? `&bypass_cache=true` : `&bypass_cache=false`
 
 const requests = {

@@ -2,7 +2,7 @@ import {Button, Grid, Link, TextField, Typography} from "@mui/material";
 import {useEffect, useState} from "react";
 import {useAccount} from "../utils/providers/AccountProvider.jsx";
 import {gapi} from "gapi-script";
-import {GoogleLogin} from "react-google-login";
+import {GoogleLogin} from "@leecheuk/react-google-login";
 import "./LoginPage.css"
 
 export default function LoginPage() {

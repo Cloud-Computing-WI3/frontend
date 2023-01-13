@@ -74,12 +74,12 @@ const router = createBrowserRouter([
                         element: <NewsPage title={"My categories"}/>,
                         loader: () => {
                             return Accounts.getCategories().then(categories => {
-                                const categoryNames = categories.map(c => c.name).join(",");
+                                const categoryNames = categories.map(c => {
+                                    return {name: c.name, pointer: null}
+                                });
                                 if (categoryNames.length > 0) {
-                                    return ArticlesByCategories.get({
-                                        categories: categoryNames,
-                                        elastic_pointer: null
-                                    }).then(res => {
+                                    return ArticlesByCategories.get(categoryNames)
+                                        .then(res => {
                                         return res;
                                     }).catch(e => {
                                         console.log(e);
