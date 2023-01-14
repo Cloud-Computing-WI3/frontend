@@ -14,6 +14,22 @@ import {ArticlesByKeywords} from "./utils/apis/news_feed/articles_by_keywords.js
 import {ArticlesByCategories} from "./utils/apis/news_feed/articles_by_categories.js";
 import {Accounts} from "./utils/apis/profile_management/accounts.js";
 
+/**
+ * createBrowserRouter function is used to create a new instance of the browser router
+ * with custom routes and components.
+ *
+ * RouterProvider is used to provide the router object to the application.
+ *
+ * App is the top-level component of the application.
+ * ErrorPage is the component used to display errors.
+ * HomePage is the default page of the application.
+ * UserPage is the page for displaying user-specific information.
+ * LoginPage is the page for logging in to the application.
+ * RequireAuthRoute is a higher order component that checks if user is logged in.
+ * RegisterPage is the page for registering new users.
+ * NewsPage is the page for displaying news articles.
+ * Articles, ArticlesByKeywords, ArticlesByCategories and Accounts are API modules for retrieving data from the server.
+ */
 
 const router = createBrowserRouter([
     {
@@ -35,6 +51,10 @@ const router = createBrowserRouter([
                     {
                         path: "",
                         element: <HomePage/>,
+                        /**
+                         * loader function retrieves data from the server and returns it.
+                         * In this case it is used to retrieve articles of the general category and return them.
+                         */
                         loader: () => {
                             return Articles.get({category_name: "general", elastic_pointer: null}).then(res => {
                                 return res;
@@ -47,6 +67,10 @@ const router = createBrowserRouter([
                     {
                         path: "/my/keywords",
                         element: <NewsPage title={"My keywords"}/>,
+                        /**
+                         * loader function retrieves data from the server and returns it.
+                         * In this case it is used to retrieve articles by keywords and return them.
+                         */
                         loader: () => {
                             return Accounts.getKeywords().then(keywords => {
                                 const keywordNames = keywords.map(c => c.name).join(",");
@@ -72,6 +96,10 @@ const router = createBrowserRouter([
                     {
                         path: "/my/categories",
                         element: <NewsPage title={"My categories"}/>,
+                        /**
+                         * loader function retrieves data from the server and returns it.
+                         * In this case it is used to retrieve articles by categories and return them.
+                         */
                         loader: () => {
                             return Accounts.getCategories().then(categories => {
                                 const categoryNames = categories.map(c => {

@@ -1,6 +1,17 @@
 import axios from "axios";
 import {Auth} from "./profile_management/authentication.js";
 
+/**
+ * Module for handling requests and responses related to the profile management.
+ *
+ * Utilizes axios for making HTTP requests and the Authentication module for handling refresh tokens.
+ * Includes request interceptors for setting the Authorization header and handling expired access tokens, as well
+ * as a response interceptor for handling failed requests.
+ *
+ * Exports axios `ProfileManagement` instance with preconfigured settings and a `responseBody` utility
+ * function for extracting the data from a response.
+ */
+
 // baseURL: "https://profile-management-2qda3nwega-uc.a.run.app",
 
 export const ProfileManagement = axios.create({
