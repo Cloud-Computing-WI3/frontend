@@ -14,7 +14,7 @@ function App(props) {
                 <MessageProvider>
                     <AccountProvider>
                         <Header/>
-                        <Content />
+                        <Content/>
                     </AccountProvider>
                 </MessageProvider>
             </LoadingProvider>

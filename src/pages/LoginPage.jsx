@@ -41,16 +41,18 @@ export default function LoginPage() {
                 </Typography>
             </Grid>
             <Grid item xs={12}>
-                <TextField label="E-Mail" variant="outlined" name="email" type="email" fullWidth onChange={(e) => setEmail(e.target.value)} value={email} />
+                <TextField label="E-Mail" variant="outlined" name="email" type="email" fullWidth
+                           onChange={(e) => setEmail(e.target.value)} value={email}/>
             </Grid>
             <Grid item xs={12}>
-                <TextField label="Password" variant="outlined" name="password" type="password" fullWidth onChange={(e) => setPassword(e.target.value)} value={password}/>
+                <TextField label="Password" variant="outlined" name="password" type="password" fullWidth
+                           onChange={(e) => setPassword(e.target.value)} value={password}/>
             </Grid>
             <Grid item xs={12} container spacing={2} sx={{justifyContent: {xs: "space-between", md: "center"}}}>
                 <Grid item>
                     <Link className="link" to="/register">No account yet? Sign Up!</Link>
                 </Grid>
-                
+
             </Grid>
             <Grid item xs={12}>
                 <Button variant="contained" className="login-button" onClick={handleLogin} fullWidth>Login</Button>

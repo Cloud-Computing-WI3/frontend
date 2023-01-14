@@ -13,8 +13,8 @@ export default function Content(props) {
             <Box className="main" sx={{p: 3}}>
                 {props.children ? props.children : <Outlet/>}
             </Box>
-            {message && <Message />}
-            {isLoading && <LoadingScreen message={loadingMessage} />}
+            {message && <Message/>}
+            {isLoading && <LoadingScreen message={loadingMessage}/>}
         </>
 
     )

@@ -5,12 +5,26 @@ import CircularProgress from "@mui/material/CircularProgress";
 import TextField from '@mui/material/TextField';
 import {GoogleCategories} from "../utils/apis/news_feed/google_categories.js";
 
+/**
+ * A reusable KeywordAutocomplete component that allows users to select keywords from a list or add new keywords.
+ * Utilizes Material-UI's Autocomplete component for styling and functionality.
+ *
+ * Props:
+ * userKeywords: an array of keywords that the user has previously selected
+ * keywords: an array of all available keywords
+ * onChange: a callback function that is called when the selected keywords change
+ */
+
 const filter = createFilterOptions();
+
 export default function KeywordAutocomplete(props) {
-    const [value, setValue] = useState(props.userKeywords.map(kW => {return ({category: "My keywords", name: kW.name, id: kW.id})}));
+    const [value, setValue] = useState(props.userKeywords.map(kW => {
+        return ({category: "My keywords", name: kW.name, id: kW.id})
+    }));
     const initOptions = value.concat(props.keywords.filter(kW => !value.some(v => v.id === kW.id)));
     const [googleCategories, setGoogleCategories] = useState([]);
     const [options, setOptions] = useState(initOptions.concat(googleCategories));
+
     useEffect(() => {
         setLoading(true);
         GoogleCategories.get().then(categories => {
@@ -20,6 +34,7 @@ export default function KeywordAutocomplete(props) {
         })
     }, [])
     const {isLoading, setLoading} = useLoader();
+
     return (
         <Autocomplete
             multiple
@@ -61,7 +76,7 @@ export default function KeywordAutocomplete(props) {
             clearOnBlur
             handleHomeEndKeys
             renderOption={(renderProps, option) => {
-                if(value.some((val) => val.name === option.name)) {
+                if (value.some((val) => val.name === option.name)) {
                     renderProps["aria-selected"] = true;
                     renderProps["aria-disabled"] = true;
                 }
