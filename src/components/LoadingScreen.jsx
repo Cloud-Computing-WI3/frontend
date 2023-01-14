@@ -2,6 +2,7 @@ import {Box} from "@mui/material";
 import CircularProgress, {
     circularProgressClasses
 } from '@mui/material/CircularProgress';
+import Typography from "@mui/material/Typography";
 
 export default function LoadingScreen(props) {
     return (
@@ -18,7 +19,7 @@ export default function LoadingScreen(props) {
                 justifyContent: "center",
                 backgroundColor: "rgba(0,0,0, 0.2)"
         }}>
-            <Box sx={{ position: 'relative' }}>
+            <Box sx={{ position: "relative"}}>
                 <CircularProgress
                     variant="determinate"
                     sx={{
@@ -46,7 +47,7 @@ export default function LoadingScreen(props) {
                     thickness={4}
                     {...props}
                 />
-                {props.message && props.message}
+                {props.message && <Typography sx={{textAlign: "center"}}>{props.message}</Typography>}
             </Box>
         </Box>
     )
