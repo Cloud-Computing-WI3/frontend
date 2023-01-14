@@ -25,7 +25,7 @@ const theme = createTheme({
     },
     typography: {
         h1: {
-            fontSize: '3.5rem',
+            fontSize: '2.5rem',
             fontWeight: 700,
             lineHeight: 1.2,
             letterSpacing: '-0.01562em',

@@ -7,9 +7,6 @@ import Typography from '@mui/material/Typography';
 import { Link } from 'react-router-dom';
 import './MediaCard.css';
 
-
-import './MediaCard.css';
-
 export default function MediaCard(props) {
     return (
         <Card className="card">

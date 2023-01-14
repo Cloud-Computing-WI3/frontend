@@ -16,6 +16,8 @@ import ListItem from '@mui/material/ListItem';
 import {Avatar, Link} from "@mui/material";
 import {useAccount} from "../utils/providers/AccountProvider.jsx";
 import {useNavigate} from "react-router-dom";
+import './Header.css';
+
 
 export default function Header() {
     // drawer navigation links
@@ -50,7 +52,7 @@ export default function Header() {
     return (
         <Box sx={{flexGrow: 1}}>
             <AppBar position="static">
-                <Toolbar>
+                <Toolbar className="navBar" sx={{minHeight: "70px"}}>
                     <IconButton
                         size="large"
                         edge="start"
@@ -61,7 +63,7 @@ export default function Header() {
                     >
                         <MenuIcon/>
                     </IconButton>
-                    <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
+                    <Typography variant="h6" component="div" sx={{flexGrow: 1, mb: "10px"}}>
                         <Link to="/" color="inherit" sx={{textDecoration: "none"}}>Newsify</Link>
                     </Typography>
                     <div>
