@@ -10,9 +10,9 @@ import { Articles } from "../utils/apis/news_feed/articles.js";
 
 export default function HomePage() {
     const data = useLoaderData();
-    const [new_elastic_pointer, setNewElasticPointer] = useState(data.elastic_pointer || null);
+    const [new_elastic_pointer, setNewElasticPointer] = useState(data.elastic_pointer);
     const [page, setPage] = useState(1)
-    const [articles, setArticles] = useState(data.articles || []);
+    const [articles, setArticles] = useState(data.articles);
     const [headline, setHeadline] = useState(undefined)
 
 
