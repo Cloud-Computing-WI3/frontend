@@ -1,22 +1,23 @@
 import React from "react";
-import {Avatar, Button, Chip, Grid, TextField, Typography} from "@mui/material";
-import {useAccount} from "../../utils/providers/AccountProvider.jsx";
-import {useEffect, useState} from "react";
-import {Accounts} from "../../utils/apis/profile_management/accounts.js";
-import {useMessage} from "../../utils/providers/MessageProvider.jsx";
-import {Categories} from "../../utils/apis/profile_management/categories.js";
-import {Formik} from "formik";
+import { Avatar, Button, Chip, Grid, TextField, Typography } from "@mui/material";
+import { useAccount } from "../../utils/providers/AccountProvider.jsx";
+import { useEffect, useState } from "react";
+import { Accounts } from "../../utils/apis/profile_management/accounts.js";
+import { useMessage } from "../../utils/providers/MessageProvider.jsx";
+import { Categories } from "../../utils/apis/profile_management/categories.js";
+import { Formik } from "formik";
 import * as Yup from "yup";
-import {useLoader} from "../../utils/providers/LoadingProvider.jsx";
-import {Keywords} from "../../utils/apis/profile_management/keywords.js";
+import { useLoader } from "../../utils/providers/LoadingProvider.jsx";
+import { Keywords } from "../../utils/apis/profile_management/keywords.js";
 import Autocomplete from '@mui/material/Autocomplete';
 import CircularProgress from "@mui/material/CircularProgress";
 import KeywordAutocomplete from "../../components/KeywordAutocomplete.jsx";
+import { grey } from "@mui/material/colors";
 
 export default function UserPage() {
-    const {user, setUser} = useAccount();
-    const {setMessage} = useMessage();
-    const {setLoading, isLoading} = useLoader();
+    const { user, setUser } = useAccount();
+    const { setMessage } = useMessage();
+    const { setLoading, isLoading } = useLoader();
     const [categories, setCategories] = useState([]);
     const [keywords, setKeywords] = useState([]);
     useEffect(() => {
@@ -32,7 +33,7 @@ export default function UserPage() {
 
     }, []);
     return (
-        <Grid container spacing={4} sx={{alignItems: "center"}}>
+        <Grid container spacing={4} sx={{ alignItems: "center" }}>
             <Grid item xs={12} container direction="column" spacing={2}>
                 <Grid item xs={12}>
                     <Typography variant="h1">User Information</Typography>
@@ -45,7 +46,7 @@ export default function UserPage() {
                         categories: user.categories,
                         keywords: user.keywords
                     }}
-                    onSubmit={(values, {setSubmitting}) => {
+                    onSubmit={(values, { setSubmitting }) => {
                         setLoading(true);
                         Accounts.save(values, user.id).then(res => {
                             setUser(res);
@@ -86,28 +87,22 @@ export default function UserPage() {
                             <form onSubmit={(values) => {
                                 handleSubmit(values);
                             }
-                            } style={{width: "100%"}}>
-                                <Grid item xs={12} container
-                                      sx={{display: "flex", alignItems: "center", justifyContent: "center"}}>
-                                    <Grid item xs={3} md={3}>
-                                        <Avatar src={user.picture} alt="User avatar"
-                                                sx={{width: "100%", height: "auto"}}/>
-                                    </Grid>
-                                    <Grid item container xs={9} md={9} spacing={3}>
-                                        <Grid item xs={12}>
-                                            <TextField value={values.given_name} label="First name" fullWidth/>
+                            } style={{ width: "100%" }}>
+                                <Grid item xs={12} container sx={{ display: "flex", alignItems: "center" }}>
+                                    <Grid item container xs={12} spacing={3} sx={{ display: "flex", alignItems: "center", justifyContent: "center", marginTop: "10px", marginBottom: "10px"}}>
+                                        <Grid item xs={3} spacing={3} md={3}>
+                                            <Avatar src={user.picture} alt="User avatar" sx={{ width: "100%", height: "auto", maxWidth: "200px", minWidth: "90px"}} />
                                         </Grid>
-                                        <Grid item xs={12}>
-                                            <TextField value={values.family_name} label="Last name" fullWidth/>
-                                        </Grid>
-                                        <Grid item xs={12}>
-                                            <TextField value={values.email} fullWidth type="email"
-                                                       InputProps={{
-                                                           readOnly: true,
-                                                       }} disabled/>
+                                        <Grid item container xs={9} md={9} spacing={3} sx={{ justifyContent: "flex-end" }}>
+                                            <Grid item xs={12}>
+                                                <Typography variant="h4">{values.given_name} {values.family_name}</Typography>
+                                            </Grid>
+                                            <Grid item xs={12}>
+                                                <Typography variant="h6" color={grey[600]} >{values.email}</Typography>
+                                            </Grid>
                                         </Grid>
                                     </Grid>
-                                    <Grid item xs={12} container direction="column" spacing={2} sx={{mt: 2}}>
+                                    <Grid item xs={12} container direction="column" spacing={2} sx={{ mt: 2 }}>
                                         <Grid item xs={12}>
                                             <Typography variant="h1">My categories</Typography>
                                         </Grid>
@@ -116,7 +111,7 @@ export default function UserPage() {
                                                 <Grid item xs={12}>
                                                     <CircularProgress color="inherit" size={40} />
                                                 </Grid>
-                                                    : null}
+                                                : null}
                                             {categories && categories.map(category => (
                                                 <Grid item key={category.id}>
                                                     <Chip
@@ -139,43 +134,20 @@ export default function UserPage() {
                                             ))}
                                         </Grid>
                                     </Grid>
-                                    <Grid item xs={12} container direction="column" spacing={2} sx={{mt: 2}}>
+                                    <Grid item xs={12} container direction="column" spacing={2} sx={{ mt: 2 }}>
                                         <Grid item xs={12}>
                                             <Typography variant="h1">My keywords</Typography>
                                         </Grid>
                                         <Grid item xs={12} container spacing={2}>
                                             <Grid item xs={12}>
-                                                <KeywordAutocomplete onChange={(value) => setFieldValue("keywords", value)} keywords={keywords} userKeywords={user.keywords}  />
+                                                <KeywordAutocomplete onChange={(value) => setFieldValue("keywords", value)} keywords={keywords} userKeywords={user.keywords} />
                                             </Grid>
 
                                         </Grid>
-                                        {/*<Grid item xs={12} container spacing={2}>
-                                            {keywords && keywords.map(keyword => (
-                                                <Grid item key={keyword.id}>
-                                                    <Chip
-                                                        label={keyword.name}
-                                                        onClick={(event) => {
-                                                            const kw = keywords.filter(k => k.id === keyword.id)[0];
-                                                            if (!values.keywords.some(c => c.id === kw.id)) {
-                                                                if (values.keywords.length > 0) {
-                                                                    setFieldValue("keywords", [...values.keywords, kw]);
-                                                                } else {
-                                                                    setFieldValue("keywords", [kw]);
-                                                                }
-                                                            } else {
-                                                                setFieldValue("keywords", values.keywords.filter(k => k.id !== kw.id));
-
-                                                            }
-                                                        }}
-                                                        color={values.keywords.some(k => k.id === keyword.id) ? "primary" : undefined}
-                                                    />
-                                                </Grid>
-                                            ))}
-                                        </Grid>*/}
                                     </Grid>
-                                    <Grid item xs={12} sx={{mt: 3}}>
+                                    <Grid item xs={12} sx={{ mt: 3 }}>
                                         <Button disabled={isSubmitting} size="large" variant="contained" color="primary"
-                                                type="submit">Save
+                                            type="submit">Save
                                             account</Button>
                                     </Grid>
                                 </Grid>
@@ -184,6 +156,6 @@ export default function UserPage() {
                     }}
                 </Formik>
             </Grid>
-        </Grid>
+        </Grid >
     )
 }
