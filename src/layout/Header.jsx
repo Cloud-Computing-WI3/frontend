@@ -19,14 +19,19 @@ import {useNavigate} from "react-router-dom";
 import './Header.css';
 
 
+/**
+* A header component that includes a navigation drawer and user account menu.
+* Utilizes Material-UI components for styling.
+* Includes links for navigating to the main page, keyword pages, and category pages.
+* Utilizes the useAccount hook for handling user authentication and the useNavigate hook for navigating through pages.
+*/
+
 export default function Header() {
     // drawer navigation links
     const navigationLinks = [
         {name: "Top Articles", link: "/"},
         {name: "My Keywords", link: "/my/keywords"},
-        // my categories --> testwise for keywords 'health' and 'sports'
         {name: "My Categories", link: "/my/categories"},
-        // category pages
         {name: "Technology", link: "/categories/technology"},
         {name: "Sports", link: "/categories/sports"},
         {name: "Business", link: "/categories/business"},

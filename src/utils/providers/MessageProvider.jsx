@@ -1,4 +1,9 @@
 import React, {createContext, useContext, useState} from "react";
+
+/**
+ * Component provides a context for displaying messages to the user.
+ */
+
 const defaultMessage = {
     status: undefined,
     text: "",
