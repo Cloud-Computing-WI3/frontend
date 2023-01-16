@@ -29,7 +29,7 @@ const theme = createTheme({
     },
     typography: {
         h1: {
-            fontSize: '3.5rem',
+            fontSize: '2.5rem',
             fontWeight: 700,
             lineHeight: 1.2,
             letterSpacing: '-0.01562em',
@@ -105,6 +105,14 @@ const theme = createTheme({
             fontWeight: 400,
             lineHeight: 1.5,
             letterSpacing: '0.00938em',
+            fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
+        },
+        link: {
+            fontSize: '1rem',
+            fontWeight: 400,
+            lineHeight: 1.5,
+            letterSpacing: '0.00938em',
+            fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
         }
     },
     components: {
