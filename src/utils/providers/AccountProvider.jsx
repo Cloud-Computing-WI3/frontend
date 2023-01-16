@@ -7,7 +7,8 @@ import {useLoader} from "./LoadingProvider.jsx";
 
 
 export const AccountContext = createContext();
-function AccountProvider (props) {
+
+function AccountProvider(props) {
     const localStore = localStorage.getItem("user");
     const localStorageUser = localStore ? JSON.parse(localStore) : null;
     const [user, setUser] = useState(localStorageUser ? localStorageUser : null);
@@ -24,7 +25,8 @@ function AccountProvider (props) {
 
     function googleLogin(token, googleId, tokenId) {
         setLoadingMessage("Signing in…");
-        setLoading(true);        Auth.googleLogin(token, googleId, tokenId)
+        setLoading(true);
+        Auth.googleLogin(token, googleId, tokenId)
             .then((data) => {
                 localStorage.setItem("access", data.access_token);
                 setAccessToken(data.access_token);
@@ -51,6 +53,7 @@ function AccountProvider (props) {
         })
 
     }
+
     function login(username, password) {
         setLoadingMessage("Signing in…");
         setLoading(true);
@@ -125,6 +128,7 @@ function AccountProvider (props) {
             status: "success"
         });
     }
+
     useEffect(() => {
         if (localStorage.getItem("refresh") !== null && localStorage.getItem("user")) {
             refreshUser();
@@ -132,7 +136,8 @@ function AccountProvider (props) {
     }, []);
 
     return (
-        <AccountContext.Provider value={{user, setUser, isAuthenticated, login, logout, refreshUser, googleLogin, googleClientId}}>
+        <AccountContext.Provider
+            value={{user, setUser, isAuthenticated, login, logout, refreshUser, googleLogin, googleClientId}}>
             {props.children}
         </AccountContext.Provider>
     );
