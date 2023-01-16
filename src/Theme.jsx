@@ -105,6 +105,14 @@ const theme = createTheme({
             fontWeight: 400,
             lineHeight: 1.5,
             letterSpacing: '0.00938em',
+            fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
+        },
+        link: {
+            fontSize: '1rem',
+            fontWeight: 400,
+            lineHeight: 1.5,
+            letterSpacing: '0.00938em',
+            fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
         }
     },
     components: {

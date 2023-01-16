@@ -43,7 +43,8 @@ export default function RegisterPage() {
         },
     });
     return (<>
-        <Typography variant="h1">Register</Typography>
+        <Typography variant="h1" sx={{marginBottom: "20px"}}>Register</Typography>
+        
         <form onSubmit={registrationForm.handleSubmit}>
             <Grid item container spacing={2}>
                 <Grid item xs={12}>

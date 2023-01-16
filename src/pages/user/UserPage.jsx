@@ -89,13 +89,13 @@ export default function UserPage() {
                             }
                             } style={{ width: "100%" }}>
                                 <Grid item xs={12} container sx={{ display: "flex", alignItems: "center" }}>
-                                    <Grid item container xs={12} spacing={3} sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
-                                        <Grid item xs={3} md={3}>
-                                            <Avatar src={user.picture} alt="User avatar" sx={{ width: "100%", height: "auto" }} />
+                                    <Grid item container xs={12} spacing={3} sx={{ display: "flex", alignItems: "center", justifyContent: "center", marginTop: "10px", marginBottom: "10px"}}>
+                                        <Grid item xs={3} spacing={3} md={3}>
+                                            <Avatar src={user.picture} alt="User avatar" sx={{ width: "100%", height: "auto", maxWidth: "200px", minWidth: "90px"}} />
                                         </Grid>
                                         <Grid item container xs={9} md={9} spacing={3} sx={{ justifyContent: "flex-end" }}>
                                             <Grid item xs={12}>
-                                                <Typography variant="h3">{values.given_name} {values.family_name}</Typography>
+                                                <Typography variant="h4">{values.given_name} {values.family_name}</Typography>
                                             </Grid>
                                             <Grid item xs={12}>
                                                 <Typography variant="h6" color={grey[600]} >{values.email}</Typography>

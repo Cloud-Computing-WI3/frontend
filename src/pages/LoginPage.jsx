@@ -50,7 +50,7 @@ export default function LoginPage() {
             </Grid>
             <Grid item xs={12} container spacing={2} sx={{justifyContent: {xs: "space-between", md: "center"}}}>
                 <Grid item>
-                    <Link className="link" to="/register">No account yet? Sign Up!</Link>
+                    <Link className="link" sx={{fontFamily: "Roboto"}} to="/register" >No account yet? Sign Up!</Link>
                 </Grid>
 
             </Grid>
