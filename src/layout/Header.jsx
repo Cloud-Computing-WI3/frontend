@@ -17,6 +17,7 @@ import {Avatar, Link} from "@mui/material";
 import {useAccount} from "../utils/providers/AccountProvider.jsx";
 import {useNavigate} from "react-router-dom";
 import './Header.css';
+import logo from "../assets/favicon.svg";
 
 
 /**
@@ -56,7 +57,7 @@ export default function Header() {
 
     return (
         <Box sx={{flexGrow: 1}}>
-            <AppBar position="static">
+            <AppBar position="fixed">
                 <Toolbar className="navBar" sx={{minHeight: "70px"}}>
                     <IconButton
                         size="large"
@@ -68,9 +69,12 @@ export default function Header() {
                     >
                         <MenuIcon/>
                     </IconButton>
-                    <Typography variant="h6" component="div" sx={{flexGrow: 1, mb: "10px"}}>
-                        <Link to="/" color="inherit" sx={{textDecoration: "none"}}>Newsify</Link>
-                    </Typography>
+                    <Box sx={{display: "flex", flexGrow: 1, alignItems: "center", justifyContent: "center", mb: 2}}>
+                        <img src={logo} height="30" alt={"logo"} style={{float: "left"}}/>
+                        <Typography variant="h6" component="div">
+                            <Link to="/" color="inherit" sx={{textDecoration: "none", pl: 1, pt: 2}}>Newsify</Link>
+                        </Typography>
+                    </Box>
                     <div>
                         <IconButton
                             size="large"

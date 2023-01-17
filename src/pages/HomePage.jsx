@@ -32,14 +32,15 @@ export default function HomePage() {
         Articles.get({category_name: "general", elastic_pointer: new_elastic_pointer}).then(res => {
             // Concatenate the new articles with the existing articles state
             setArticles([...articles, ...res.articles]);
+            setArticleLen(prevState => prevState + res.articles.length);
             setNewElasticPointer(res.elastic_pointer);
-            setHasMore(res.articles.length !== 0);
-
+            if (res.articles.length === 0) {
+                setHasMore(false);
+            }
         }).catch(e => {
             console.error(e);
         })
     }
-
     return (
         <Box sx={{p: 2}}>
             <Typography variant="h1">Top Articles</Typography>

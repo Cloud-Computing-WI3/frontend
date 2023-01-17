@@ -35,20 +35,14 @@ export default function NewsPage() {
         // Set the configuration based on the type of endpoint
         if (params.categoryName) { // case 1: read_articles endpoint
             setHeadline(params.categoryName[0].toUpperCase() + params.categoryName.substring(1))
-            setArticleLen(data.articles.length)
-            setArticles(data.articles)
-            setNewElasticPointer(data.elastic_pointer)
         } else if (location.pathname === '/my/keywords') { // case 2: get_articles_by_keywords endpoint
             setHeadline(`My keywords`)
-            setArticleLen(data.articles.length)
-            setArticles(data.articles)
-            setNewElasticPointer(data.elastic_pointer)
         } else if (location.pathname === '/my/categories') { // case 3: get_articles_by_categories endpoint
             setHeadline(`My categories`)
-            setArticleLen(data.articles.length)
-            setArticles(data.articles)
-            setNewElasticPointer(data.pointers)
         }
+        setArticleLen(data.articles.length)
+        setArticles(data.articles)
+        setNewElasticPointer(data.pointers)
         // Re-run when data or params change, e.g. when the user navigates to a different page
     }, [data, params]);
 
@@ -61,7 +55,7 @@ export default function NewsPage() {
                 const newArticles = [...articles, ...res.articles]
                 // Update the articles state and the article length state
                 setArticles(newArticles);
-                setArticleLen(res.articles.length)
+                setArticleLen(prevState => prevState + res.articles.length);
                 setNewElasticPointer(res.elastic_pointer);
                 setHasMore(res.articles.length !== 0);
 
@@ -82,18 +76,17 @@ export default function NewsPage() {
                         // Concatenate the new articles with the existing articles state
                         const newArticles = [...articles, ...res.articles]
                         // Update the articles state and the article length state
-                        setArticleLen(res.articles.length)
+                        setArticleLen(prevState => prevState + res.articles.length);
                         setArticles(newArticles);
                         setNewElasticPointer(res.elastic_pointer);
-                        console.log(res.articles);
                         setHasMore(res.articles.length !== 0);
 
                     }).catch(e => {
-                        console.log(e);
+                        console.error(e);
                     })
                 }
             }).catch(e => {
-                console.log(e);
+                console.error(e);
             })
             // Check if the request is for articles by user categories
         } else if (location.pathname === '/my/categories') {
@@ -103,6 +96,7 @@ export default function NewsPage() {
                 // Concatenate the new articles with the existing articles state
                 const newArticles = [...articles, ...res.articles]
                 // Update the articles state and the article length state
+                setArticleLen(prevState => prevState + res.articles.length);
                 setArticleLen(res.articles.length)
                 setArticles(newArticles);
                 setNewElasticPointer(res.pointers);

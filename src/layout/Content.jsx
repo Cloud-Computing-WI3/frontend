@@ -10,7 +10,7 @@ export default function Content(props) {
     const {isLoading, loadingMessage} = useLoader();
     return (
         <>
-            <Box className="main" sx={{p: 3}}>
+            <Box className="main" sx={{marginTop: 5, p: 3}}>
                 {props.children ? props.children : <Outlet/>}
             </Box>
             {message && <Message/>}
