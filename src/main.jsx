@@ -34,7 +34,7 @@ import {Accounts} from "./utils/apis/profile_management/accounts.js";
 const router = createBrowserRouter([
     {
         element: <App/>,
-        errorElement: <App><ErrorPage/></App>,
+        errorElement: <ErrorPage/>,
         path: "/",
         children: [
             {
@@ -73,20 +73,25 @@ const router = createBrowserRouter([
                          */
                         loader: () => {
                             return Accounts.getKeywords().then(keywords => {
-                                const keywordNames = keywords.map(c => c.name).join(",");
-                                if (keywordNames.length > 0) {
-                                    return ArticlesByKeywords.get({
-                                        keywords: keywordNames,
-                                        elastic_pointer: null
-                                    }).then(res => {
-                                        return res;
-                                    }).catch(e => {
-                                        console.log(e);
+                                if (keywords.length > 0) {
+                                    const keywordNames = keywords.map(c => c.name).join(",");
+                                    if (keywordNames.length > 0) {
+                                        return ArticlesByKeywords.get({
+                                            keywords: keywordNames,
+                                            elastic_pointer: null
+                                        }).then(res => {
+                                            return res;
+                                        }).catch(e => {
+                                            console.log(e);
+                                            return [];
+                                        })
+                                    } else {
                                         return [];
-                                    })
-                                } else {
+                                    }
+                                }else {
                                     return [];
                                 }
+
                             }).catch(e => {
                                 console.log(e);
                                 return []
@@ -102,20 +107,25 @@ const router = createBrowserRouter([
                          */
                         loader: () => {
                             return Accounts.getCategories().then(categories => {
-                                const categoryNames = categories.map(c => {
-                                    return {name: c.name, pointer: null}
-                                });
-                                if (categoryNames.length > 0) {
-                                    return ArticlesByCategories.get(categoryNames)
-                                        .then(res => {
-                                        return res;
-                                    }).catch(e => {
-                                        console.log(e);
+                                if (categories.length > 0) {
+                                    const categoryNames = categories.map(c => {
+                                        return {name: c.name, pointer: null}
+                                    });
+                                    if (categoryNames.length > 0) {
+                                        return ArticlesByCategories.get(categoryNames)
+                                            .then(res => {
+                                                return res;
+                                            }).catch(e => {
+                                                console.log(e);
+                                                return [];
+                                            })
+                                    } else {
                                         return [];
-                                    })
-                                } else {
+                                    }
+                                }else {
                                     return [];
                                 }
+
                             }).catch(e => {
                                 console.log(e);
                                 return []

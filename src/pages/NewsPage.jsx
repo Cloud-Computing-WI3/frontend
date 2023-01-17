@@ -1,6 +1,6 @@
 import {Grid, Typography} from "@mui/material";
 import MediaCard from "../components/MediaCard";
-import {useLoaderData, useLocation, useParams} from "react-router-dom";
+import {Link, useLoaderData, useLocation, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {Articles} from "../utils/apis/news_feed/articles.js";
 import {ArticlesByKeywords} from "../utils/apis/news_feed/articles_by_keywords.js";
@@ -8,6 +8,7 @@ import {ArticlesByCategories} from "../utils/apis/news_feed/articles_by_categori
 import {ThreeDots} from 'react-loader-spinner'
 import InfiniteScroll from 'react-infinite-scroll-component';
 import {Accounts} from "../utils/apis/profile_management/accounts.js";
+import Button from "@mui/material/Button";
 
 /**
  * The NewsPage component is the main body for displaying news articles.
@@ -26,10 +27,10 @@ export default function NewsPage() {
     const params = useParams();
     const [headline, setHeadline] = useState(undefined)
     const [articles, setArticles] = useState(data.articles || []);
-    const [new_elastic_pointer, setNewElasticPointer] = useState(data.elastic_pointer);
-    const [articleLen, setArticleLen] = useState(data.articles.length || 0)
+    const [new_elastic_pointer, setNewElasticPointer] = useState(data.elastic_pointer ? data.elastic_pointer : null);
+    const [articleLen, setArticleLen] = useState(data.articles ? data.articles.length : 0)
     const location = useLocation()
-    const [hasMore, setHasMore] = useState(true);
+    const [hasMore, setHasMore] = useState(data.articles ? true : false);
 
     useEffect(() => {
         // Set the configuration based on the type of endpoint
@@ -40,9 +41,14 @@ export default function NewsPage() {
         } else if (location.pathname === '/my/categories') { // case 3: get_articles_by_categories endpoint
             setHeadline(`My categories`)
         }
-        setArticleLen(data.articles.length)
-        setArticles(data.articles)
-        setNewElasticPointer(data.pointers)
+        if (data.articles) {
+            setArticleLen(data.articles.length)
+            setArticles(data.articles)
+            setNewElasticPointer(data.pointers)
+        }else {
+            setArticleLen(0);
+            setArticles([]);
+        }
         // Re-run when data or params change, e.g. when the user navigates to a different page
     }, [data, params]);
 
@@ -129,10 +135,26 @@ export default function NewsPage() {
                             }>
                 <Grid key={headline} container rowSpacing={1}>
                     {
-                        articles.map(article => (
-                            <Grid item xs={12} sm={6} md={3} key={`${article.publishedAt}-${article.author}`}>
-                                <MediaCard key={data.id} {...article}></MediaCard>
-                            </Grid>))
+                        articles > 0 ?
+                            articles.map(article => (
+                                <Grid item xs={12} sm={6} md={3} key={`${article.publishedAt}-${article.author}`}>
+                                    <MediaCard key={data.id} {...article}></MediaCard>
+                                </Grid>))
+                            :
+                            <Grid item xs={12}>
+                                <Typography>
+                                    No articles found. Please make sure you've selected categories and/or keywords.
+                                </Typography>
+                                <Button
+                                    component={Link}
+                                    to={"/user"}
+                                    size="small"
+                                    variant={"contained"}
+                                    sx={{mt: 1}}
+                                >
+                                    Go to Settings
+                                </Button>
+                            </Grid>
                     }
                 </Grid>
             </InfiniteScroll>

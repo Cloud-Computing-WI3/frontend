@@ -33,7 +33,7 @@ export default function UserPage() {
 
     }, []);
     return (
-        <Grid container spacing={4} sx={{ alignItems: "center" }}>
+        <Grid container sx={{ alignItems: "center" }} spacing={5}>
             <Grid item xs={12} container direction="column" spacing={2}>
                 <Grid item xs={12}>
                     <Typography variant="h1">User Information</Typography>
@@ -100,7 +100,7 @@ export default function UserPage() {
                                                 <Typography variant="h4">{values.given_name} {values.family_name}</Typography>
                                             </Grid>
                                             <Grid item xs={12}>
-                                                <Typography variant="h6" color={grey[600]} >{values.email}</Typography>
+                                                <Typography variant="subtitle2" color={grey[600]} >{values.email}</Typography>
                                             </Grid>
                                         </Grid>
                                     </Grid>
