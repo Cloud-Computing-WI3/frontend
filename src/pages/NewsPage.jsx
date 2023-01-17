@@ -26,7 +26,7 @@ export default function NewsPage() {
     const data = useLoaderData();
     const params = useParams();
     const [headline, setHeadline] = useState(undefined)
-    const [articles, setArticles] = useState(data.articles || []);
+    const [articles, setArticles] = useState(data.articles ? data.articles : []);
     const [new_elastic_pointer, setNewElasticPointer] = useState(data.elastic_pointer ? data.elastic_pointer : null);
     const [articleLen, setArticleLen] = useState(data.articles ? data.articles.length : 0)
     const location = useLocation()
@@ -40,14 +40,6 @@ export default function NewsPage() {
             setHeadline(`My keywords`)
         } else if (location.pathname === '/my/categories') { // case 3: get_articles_by_categories endpoint
             setHeadline(`My categories`)
-        }
-        if (data.articles) {
-            setArticleLen(data.articles.length)
-            setArticles(data.articles)
-            setNewElasticPointer(data.pointers)
-        }else {
-            setArticleLen(0);
-            setArticles([]);
         }
         // Re-run when data or params change, e.g. when the user navigates to a different page
     }, [data, params]);
@@ -103,7 +95,6 @@ export default function NewsPage() {
                 const newArticles = [...articles, ...res.articles]
                 // Update the articles state and the article length state
                 setArticleLen(prevState => prevState + res.articles.length);
-                setArticleLen(res.articles.length)
                 setArticles(newArticles);
                 setNewElasticPointer(res.pointers);
                 setHasMore(res.articles.length !== 0);
