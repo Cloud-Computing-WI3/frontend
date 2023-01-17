@@ -135,7 +135,7 @@ export default function NewsPage() {
                             }>
                 <Grid key={headline} container rowSpacing={1}>
                     {
-                        articles > 0 ?
+                        articles.length > 0 ?
                             articles.map(article => (
                                 <Grid item xs={12} sm={6} md={3} key={`${article.publishedAt}-${article.author}`}>
                                     <MediaCard key={data.id} {...article}></MediaCard>
