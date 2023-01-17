@@ -1,5 +1,5 @@
 import React from "react";
-import { Avatar, Button, Chip, Grid, TextField, Typography } from "@mui/material";
+import { Avatar, Button, Chip, Grid, Typography } from "@mui/material";
 import { useAccount } from "../../utils/providers/AccountProvider.jsx";
 import { useEffect, useState } from "react";
 import { Accounts } from "../../utils/apis/profile_management/accounts.js";
@@ -9,7 +9,6 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 import { useLoader } from "../../utils/providers/LoadingProvider.jsx";
 import { Keywords } from "../../utils/apis/profile_management/keywords.js";
-import Autocomplete from '@mui/material/Autocomplete';
 import CircularProgress from "@mui/material/CircularProgress";
 import KeywordAutocomplete from "../../components/KeywordAutocomplete.jsx";
 import { grey } from "@mui/material/colors";
@@ -17,9 +16,10 @@ import { grey } from "@mui/material/colors";
 export default function UserPage() {
     const { user, setUser } = useAccount();
     const { setMessage } = useMessage();
-    const { setLoading, isLoading } = useLoader();
+    const { setLoading, isLoading, setLoadingMessage } = useLoader();
     const [categories, setCategories] = useState([]);
     const [keywords, setKeywords] = useState([]);
+    const [madeChanges, setMadeChanges] = useState(false);
     useEffect(() => {
         setLoading(true);
         Categories.get()
@@ -48,6 +48,7 @@ export default function UserPage() {
                     }}
                     onSubmit={(values, { setSubmitting }) => {
                         setLoading(true);
+                        setLoadingMessage("Saving…");
                         Accounts.save(values, user.id).then(res => {
                             setUser(res);
                             localStorage.setItem("user", JSON.stringify(res));
@@ -67,6 +68,7 @@ export default function UserPage() {
                                 code: e.response.status
                             });
                             setLoading(false);
+                            setLoadingMessage("");
                             setSubmitting(false);
                         });
                     }}
@@ -90,7 +92,7 @@ export default function UserPage() {
                             } style={{ width: "100%" }}>
                                 <Grid item xs={12} container sx={{ display: "flex", alignItems: "center" }}>
                                     <Grid item container xs={12} spacing={3} sx={{ display: "flex", alignItems: "center", justifyContent: "center", marginTop: "10px", marginBottom: "10px"}}>
-                                        <Grid item xs={3} spacing={3} md={3}>
+                                        <Grid item xs={3} md={3}>
                                             <Avatar src={user.picture} alt="User avatar" sx={{ width: "100%", height: "auto", maxWidth: "200px", minWidth: "90px"}} />
                                         </Grid>
                                         <Grid item container xs={9} md={9} spacing={3} sx={{ justifyContent: "flex-end" }}>
@@ -127,6 +129,7 @@ export default function UserPage() {
                                                             } else {
                                                                 setFieldValue("categories", values.categories.filter(c => c.id !== cat.id));
                                                             }
+                                                            setMadeChanges(true);
                                                         }}
                                                         color={values.categories.some(c => c.id === category.id) ? "primary" : undefined}
                                                     />
@@ -140,13 +143,16 @@ export default function UserPage() {
                                         </Grid>
                                         <Grid item xs={12} container spacing={2}>
                                             <Grid item xs={12}>
-                                                <KeywordAutocomplete onChange={(value) => setFieldValue("keywords", value)} keywords={keywords} userKeywords={user.keywords} />
+                                                <KeywordAutocomplete onChange={(value) => {
+                                                    setFieldValue("keywords", value);
+                                                    setMadeChanges(true);
+                                                }} keywords={keywords} userKeywords={user.keywords} />
                                             </Grid>
 
                                         </Grid>
                                     </Grid>
                                     <Grid item xs={12} sx={{ mt: 3 }}>
-                                        <Button disabled={isSubmitting} size="large" variant="contained" color="primary"
+                                        <Button disabled={isSubmitting  || !madeChanges} size="large" variant="contained" color="primary"
                                             type="submit">Save
                                             account</Button>
                                     </Grid>

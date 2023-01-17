@@ -4,8 +4,6 @@ import {Auth} from "../apis/profile_management/authentication.js";
 import {useMessage} from "./MessageProvider";
 import {useGoogleLogout} from "@leecheuk/react-google-login";
 import {useLoader} from "./LoadingProvider.jsx";
-
-
 export const AccountContext = createContext();
 
 function AccountProvider(props) {
@@ -19,10 +17,10 @@ function AccountProvider(props) {
     const {setMessage} = useMessage();
     const {setLoading, setLoadingMessage} = useLoader();
     const googleClientId = "336520046482-27egm1na9kpsnru77n8dgbm89a9uoqkn.apps.googleusercontent.com";
-    const {signOut} = useGoogleLogout({
-        googleClientId
-    });
 
+    const {signOut} = useGoogleLogout({
+        clientId: googleClientId
+    });
     function googleLogin(token, googleId, tokenId) {
         setLoadingMessage("Signing in…");
         setLoading(true);
