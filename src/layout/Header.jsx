@@ -57,7 +57,7 @@ export default function Header() {
     return (
         <Box sx={{flexGrow: 1}}>
             <AppBar position="static">
-                <Toolbar className="navBar" sx={{minHeight: "70px"}}>
+                <Toolbar className="navBar" sx={{minHeight: "20px"}}>
                     <IconButton
                         size="large"
                         edge="start"
