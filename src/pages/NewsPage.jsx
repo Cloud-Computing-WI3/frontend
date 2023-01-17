@@ -27,7 +27,7 @@ export default function NewsPage() {
     const params = useParams();
     const [headline, setHeadline] = useState(undefined)
     const [articles, setArticles] = useState(data.articles ? data.articles : []);
-    const [new_elastic_pointer, setNewElasticPointer] = useState(data.elastic_pointer ? data.elastic_pointer : null);
+    const [new_elastic_pointer, setNewElasticPointer] = useState(data.pointers ? data.pointers : null);
     const [articleLen, setArticleLen] = useState(data.articles ? data.articles.length : 0)
     const location = useLocation()
     const [hasMore, setHasMore] = useState(data.articles ? true : false);
@@ -42,7 +42,7 @@ export default function NewsPage() {
             setHeadline(`My categories`)
         }
         setArticles(data.articles ? data.articles : []);
-        setNewElasticPointer(data.elastic_pointer ? data.elastic_pointer : null);
+        setNewElasticPointer(data.pointers ? data.pointers : null);
         setArticleLen(data.articles ? data.articles.length : 0);
         setHasMore(data.articles ? true : false);
         // Re-run when data or params change, e.g. when the user navigates to a different page
@@ -93,19 +93,24 @@ export default function NewsPage() {
             // Check if the request is for articles by user categories
         } else if (location.pathname === '/my/categories') {
             // create an array of objects with category name and pointer
-            const nextBatchObject = Object.entries(new_elastic_pointer).map(([name, pointer]) => ({name, pointer}))
-            ArticlesByCategories.get(nextBatchObject).then(res => {
-                // Concatenate the new articles with the existing articles state
-                const newArticles = [...articles, ...res.articles]
-                // Update the articles state and the article length state
-                setArticleLen(prevState => prevState + res.articles.length);
-                setArticles(newArticles);
-                setNewElasticPointer(res.pointers);
-                setHasMore(res.articles.length !== 0);
+            if (new_elastic_pointer !== null && new_elastic_pointer !== undefined) {
+                const nextBatchObject = Object.entries(new_elastic_pointer).map(([name, pointer]) => ({name, pointer}))
+                ArticlesByCategories.get(nextBatchObject).then(res => {
+                    // Concatenate the new articles with the existing articles state
+                    const newArticles = [...articles, ...res.articles]
+                    // Update the articles state and the article length state
+                    setArticleLen(prevState => prevState + res.articles.length);
+                    setArticles(newArticles);
+                    setNewElasticPointer(res.pointers);
+                    setHasMore(res.articles.length !== 0);
 
-            }).catch(e => {
-                console.log(e);
-            })
+                }).catch(e => {
+                    console.log(e);
+                })
+            }else {
+
+            }
+
         }
     }
 
