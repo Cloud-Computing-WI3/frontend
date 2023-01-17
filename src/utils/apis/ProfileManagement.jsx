@@ -15,7 +15,7 @@ import {Auth} from "./profile_management/authentication.js";
 // baseURL: "https://profile-management-2qda3nwega-uc.a.run.app",
 
 export const ProfileManagement = axios.create({
-    baseURL: "http://localhost:8000",
+    baseURL: "https://profile-management-2qda3nwega-uc.a.run.app",
     timeout: 15000,
     headers: {
         "Accept": "application/json",
