@@ -1,8 +1,10 @@
 import axios from "axios";
 
 // NewsFeed implements an axios instance with a baseURL and timeout set for the API endpoint.
+
+// baseURL: "https://news-feed-api-2qda3nwega-uc.a.run.app"
 export const NewsFeed = axios.create({
-    baseURL: "https://news-feed-api-2qda3nwega-uc.a.run.app",
+    baseURL: "http://127.0.0.1:8000",
     timeout: 15000,
     headers: {}
 });

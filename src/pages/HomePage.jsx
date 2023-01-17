@@ -18,6 +18,7 @@ export default function HomePage() {
     const [articles, setArticles] = useState(data.articles);
     const [articleLen, setArticleLen] = useState(data.articles.length || 0)
     const [headline, setHeadline] = useState(undefined)
+    const [hasMore, setHasMore] = useState(true);
 
     useEffect(() => {
         // Set the headline and articles state when the data changes
@@ -32,6 +33,8 @@ export default function HomePage() {
             // Concatenate the new articles with the existing articles state
             setArticles([...articles, ...res.articles]);
             setNewElasticPointer(res.elastic_pointer);
+            setHasMore(res.articles.length !== 0);
+
         }).catch(e => {
             console.error(e);
         })
@@ -43,7 +46,7 @@ export default function HomePage() {
             <InfiniteScroll ref={(scroll) => scroll}
                             dataLength={articleLen}
                             next={loadMore}
-                            hasMore={true}
+                            hasMore={hasMore}
                             loader={
                                 <ThreeDots
                                     height="80"
@@ -53,13 +56,13 @@ export default function HomePage() {
                                     ariaLabel="three-dots-loading"
                                     wrapperStyle={{justifyContent: 'center'}}
                                     wrapperClassName=""
-                                    visible={true}
+                                    visible={hasMore}
                                 />
                             }>
-                <Grid key={headline} container rowSpacing={1} columnSpacing={{xs: 1, sm: 2, md: 3, lg: 4, xlg: 5}}>
+                <Grid key={headline} container rowSpacing={1}>
                     {
                         articles.map(article => (
-                            <Grid item xs={12} sm={6} md={3} lg={4} key={article.publishedAt}>
+                            <Grid item xs={12} sm={6} md={3} key={article.publishedAt}>
                                 <MediaCard key={data.id} {...article}></MediaCard>
                             </Grid>))
                     }

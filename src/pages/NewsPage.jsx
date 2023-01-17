@@ -1,13 +1,12 @@
-import {Typography, Grid} from "@mui/material";
+import {Grid, Typography} from "@mui/material";
 import MediaCard from "../components/MediaCard";
-import {useLoaderData, useParams} from "react-router-dom";
-import {useState, useEffect} from "react";
+import {useLoaderData, useLocation, useParams} from "react-router-dom";
+import {useEffect, useState} from "react";
 import {Articles} from "../utils/apis/news_feed/articles.js";
 import {ArticlesByKeywords} from "../utils/apis/news_feed/articles_by_keywords.js";
 import {ArticlesByCategories} from "../utils/apis/news_feed/articles_by_categories.js";
 import {ThreeDots} from 'react-loader-spinner'
 import InfiniteScroll from 'react-infinite-scroll-component';
-import {useLocation} from "react-router-dom";
 import {Accounts} from "../utils/apis/profile_management/accounts.js";
 
 /**
@@ -30,6 +29,7 @@ export default function NewsPage() {
     const [new_elastic_pointer, setNewElasticPointer] = useState(data.elastic_pointer);
     const [articleLen, setArticleLen] = useState(data.articles.length || 0)
     const location = useLocation()
+    const [hasMore, setHasMore] = useState(true);
 
     useEffect(() => {
         // Set the configuration based on the type of endpoint
@@ -52,7 +52,6 @@ export default function NewsPage() {
         // Re-run when data or params change, e.g. when the user navigates to a different page
     }, [data, params]);
 
-
     const loadMore = () => {
         // Check if the request is for articles by category
         if (params.categoryName) {
@@ -62,8 +61,10 @@ export default function NewsPage() {
                 const newArticles = [...articles, ...res.articles]
                 // Update the articles state and the article length state
                 setArticles(newArticles);
-                setArticleLen(newArticles.length)
+                setArticleLen(res.articles.length)
                 setNewElasticPointer(res.elastic_pointer);
+                setHasMore(res.articles.length !== 0);
+
             }).catch(e => {
                 console.error(e);
             })
@@ -81,9 +82,12 @@ export default function NewsPage() {
                         // Concatenate the new articles with the existing articles state
                         const newArticles = [...articles, ...res.articles]
                         // Update the articles state and the article length state
-                        setArticleLen(newArticles.length)
+                        setArticleLen(res.articles.length)
                         setArticles(newArticles);
                         setNewElasticPointer(res.elastic_pointer);
+                        console.log(res.articles);
+                        setHasMore(res.articles.length !== 0);
+
                     }).catch(e => {
                         console.log(e);
                     })
@@ -99,9 +103,11 @@ export default function NewsPage() {
                 // Concatenate the new articles with the existing articles state
                 const newArticles = [...articles, ...res.articles]
                 // Update the articles state and the article length state
-                setArticleLen(newArticles.length)
+                setArticleLen(res.articles.length)
                 setArticles(newArticles);
                 setNewElasticPointer(res.pointers);
+                setHasMore(res.articles.length !== 0);
+
             }).catch(e => {
                 console.log(e);
             })
@@ -114,7 +120,7 @@ export default function NewsPage() {
             <InfiniteScroll ref={(scroll) => scroll}
                             dataLength={articleLen}
                             next={loadMore}
-                            hasMore={true}
+                            hasMore={hasMore}
                             loader={
                                 <ThreeDots
                                     height="80"
@@ -124,13 +130,13 @@ export default function NewsPage() {
                                     ariaLabel="three-dots-loading"
                                     wrapperStyle={{justifyContent: 'center'}}
                                     wrapperClassName=""
-                                    visible={true}
+                                    visible={hasMore}
                                 />
                             }>
-                <Grid key={headline} container rowSpacing={1} columnSpacing={{xs: 1, sm: 2, md: 3, lg: 4, xlg: 5}}>
+                <Grid key={headline} container rowSpacing={1}>
                     {
                         articles.map(article => (
-                            <Grid item xs={12} sm={6} md={6} lg={4} key={`${article.publishedAt}-${article.author}`}>
+                            <Grid item xs={12} sm={6} md={3} key={`${article.publishedAt}-${article.author}`}>
                                 <MediaCard key={data.id} {...article}></MediaCard>
                             </Grid>))
                     }
