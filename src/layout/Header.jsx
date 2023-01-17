@@ -138,7 +138,9 @@ export default function Header() {
                                 <ListItem key={link.link}>
                                     <Typography variant="button" display="block" gutterBottom>
                                         <Link key={link.link} to={link.link} onClick={handleClose} color="inherit"
-                                              sx={{textDecoration: "none"}}>{link.name}</Link>
+                                              sx={{textDecoration: "none", cursor:"pointer",  '&:hover': {
+                                                textDecoration: "underline", fontWeight: "bold"
+                                              },}}>{link.name}</Link>
                                     </Typography>
                                 </ListItem>
                             ))
