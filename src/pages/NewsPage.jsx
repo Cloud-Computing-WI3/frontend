@@ -41,6 +41,10 @@ export default function NewsPage() {
         } else if (location.pathname === '/my/categories') { // case 3: get_articles_by_categories endpoint
             setHeadline(`My categories`)
         }
+        setArticles(data.articles ? data.articles : []);
+        setNewElasticPointer(data.elastic_pointer ? data.elastic_pointer : null);
+        setArticleLen(data.articles ? data.articles.length : 0);
+        setHasMore(data.articles ? true : false);
         // Re-run when data or params change, e.g. when the user navigates to a different page
     }, [data, params]);
 
