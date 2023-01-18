@@ -8,11 +8,12 @@ import UserPage from "./pages/user/UserPage";
 import LoginPage from "./pages/LoginPage";
 import RequireAuthRoute from "./layout/RequireAuthRoute";
 import RegisterPage from "./pages/RegisterPage";
-import NewsPage from "./pages/NewsPage";
+import CategoriesPage from "./pages/CategoriesPage.jsx";
 import {Articles} from "./utils/apis/news_feed/articles.js";
 import {ArticlesByKeywords} from "./utils/apis/news_feed/articles_by_keywords.js";
 import {ArticlesByCategories} from "./utils/apis/news_feed/articles_by_categories.js";
 import {Accounts} from "./utils/apis/profile_management/accounts.js";
+import KeywordsPage from "./pages/KeywordsPage.jsx";
 
 /**
  * createBrowserRouter function is used to create a new instance of the browser router
@@ -27,7 +28,7 @@ import {Accounts} from "./utils/apis/profile_management/accounts.js";
  * LoginPage is the page for logging in to the application.
  * RequireAuthRoute is a higher order component that checks if user is logged in.
  * RegisterPage is the page for registering new users.
- * NewsPage is the page for displaying news articles.
+ * CategoriesPage is the page for displaying news articles.
  * Articles, ArticlesByKeywords, ArticlesByCategories and Accounts are API modules for retrieving data from the server.
  */
 
@@ -66,7 +67,7 @@ const router = createBrowserRouter([
                     },
                     {
                         path: "/my/keywords",
-                        element: <NewsPage title={"My keywords"}/>,
+                        element: <KeywordsPage />,
                         /**
                          * loader function retrieves data from the server and returns it.
                          * In this case it is used to retrieve articles by keywords and return them.
@@ -100,7 +101,7 @@ const router = createBrowserRouter([
                     },
                     {
                         path: "/my/categories",
-                        element: <NewsPage title={"My categories"}/>,
+                        element: <CategoriesPage title={"My categories"}/>,
                         /**
                          * loader function retrieves data from the server and returns it.
                          * In this case it is used to retrieve articles by categories and return them.
@@ -134,7 +135,7 @@ const router = createBrowserRouter([
                     },
                     {
                         path: "/categories/:categoryName",
-                        element: <NewsPage/>,
+                        element: <CategoriesPage/>,
                         loader: ({params}) => {
                             return Articles.get({
                                 category_name: params.categoryName,

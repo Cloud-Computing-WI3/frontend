@@ -11,18 +11,17 @@ import {Accounts} from "../utils/apis/profile_management/accounts.js";
 import Button from "@mui/material/Button";
 
 /**
- * The NewsPage component is the main body for displaying news articles.
+ * The CategoriesPage component is the main body for displaying news articles.
  * It currently supports three different content types:
  *
  * - Articles grouped by category
- * - Articles for custom keywords
  * - Articles for custom categories
  *
- * @returns {JSX.Element} - A JSX element representing the NewsPage, including infinite scrolling and a loading animation.
+ * @returns {JSX.Element} - A JSX element representing the CategoriesPage, including infinite scrolling and a loading animation.
  */
 
 
-export default function NewsPage() {
+export default function CategoriesPage() {
     const data = useLoaderData();
     const params = useParams();
     const [headline, setHeadline] = useState(undefined)
@@ -33,6 +32,7 @@ export default function NewsPage() {
     const [hasMore, setHasMore] = useState(data.articles ? true : false);
 
     useEffect(() => {
+        window.scrollTo(0,0);
         // Set the configuration based on the type of endpoint
         if (params.categoryName) { // case 1: read_articles endpoint
             setHeadline(params.categoryName[0].toUpperCase() + params.categoryName.substring(1))
@@ -61,32 +61,6 @@ export default function NewsPage() {
                 setNewElasticPointer(res.elastic_pointer);
                 setHasMore(res.articles.length !== 0);
 
-            }).catch(e => {
-                console.error(e);
-            })
-            // Check if the request is for articles by user keywords
-        } else if (location.pathname === '/my/keywords') {
-            Accounts.getKeywords().then(keywords => {
-                // Extract the keyword names from the keywords object
-                const keywordNames = keywords.map(c => c.name).join(",");
-                if (keywordNames.length > 0) {
-                    // Make GET request to the ArticlesByKeywords API with the given keywords and elastic pointer
-                    ArticlesByKeywords.get({
-                        keywords: keywordNames,
-                        elastic_pointer: new_elastic_pointer
-                    }).then(res => {
-                        // Concatenate the new articles with the existing articles state
-                        const newArticles = [...articles, ...res.articles]
-                        // Update the articles state and the article length state
-                        setArticleLen(prevState => prevState + res.articles.length);
-                        setArticles(newArticles);
-                        setNewElasticPointer(res.elastic_pointer);
-                        setHasMore(res.articles.length !== 0);
-
-                    }).catch(e => {
-                        console.error(e);
-                    })
-                }
             }).catch(e => {
                 console.error(e);
             })
@@ -136,14 +110,14 @@ export default function NewsPage() {
                 <Grid key={headline} container rowSpacing={1}>
                     {
                         articles.length > 0 ?
-                            articles.map(article => (
-                                <Grid item xs={12} sm={6} md={3} key={`${article.publishedAt}-${article.author}`}>
+                            articles.map((article, index) => (
+                                <Grid item xs={12} sm={6} md={3} key={index}>
                                     <MediaCard key={data.id} {...article}></MediaCard>
                                 </Grid>))
                             :
                             <Grid item xs={12}>
                                 <Typography>
-                                    No articles found. Please make sure you've selected categories and/or keywords.
+                                    No articles found. Please make sure you've selected categories.
                                 </Typography>
                                 <Button
                                     component={Link}
