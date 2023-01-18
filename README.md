@@ -30,9 +30,6 @@ User können Vorlieben und Schlagworte in ihrem Profil hinterlegen und bekommen 
 ```
 Frontend
 ├── src
-│   ├── assets
-│   │   ├── favicon.svg
-│   │   └── react.svg
 │   ├── components
 │   │   ├── KeywordAutocomplete.jsx
 │   │   ├── LoadingScreen.jsx
@@ -76,8 +73,9 @@ Frontend
 ├── Theme.jsx
 ├── app.yaml
 ├── index.html
-├── package-lock.json
 ├── package.json
-├── README.md
 ├── vite.config.js
 └── package-lock.json
+
+The "Frontend" directory contains the files for the frontend of the project. The "src" directory holds the main source code for the frontend, including the "components" directory which contains reusable UI components.The "layout" directory contains the layout components. The "pages" directory holds the different pages of the application. The "utils" directory contains utility files such as the "apis", "news_feed" directory which contains the news feed functionalities "articles_by_categories.js", "articles_by_keywords.js", "articles.js" and "google_categories.js" files, the "profile_management" directory which contains the profile management functionalities "accounts.js", "authentication.js", "categories.js" and "keywords.js" files, and the "NewsFeed.jsx", "ProfileManagement.jsx" and "providers" directory which contains the providers "AccountProvider.jsx", "LoadingProvider.jsx" and "MessageProvider.jsx" files. The "App.jsx", "main.jsx" files are the entry point of the application. 
+"Theme.jsx" is where the application theme is configuered. The "app.yaml" file is used for deploying the application to Google App Engine. "index.html" is the main html file of the application. "package.json" contains the project dependencies."vite.config.js" file is used for configuring the development server.
