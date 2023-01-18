@@ -29,7 +29,7 @@ export default function CategoriesPage() {
     const [new_elastic_pointer, setNewElasticPointer] = useState(data.pointers ? data.pointers : null);
     const [articleLen, setArticleLen] = useState(data.articles ? data.articles.length : 0)
     const location = useLocation()
-    const [hasMore, setHasMore] = useState(data.articles ? true : false);
+    const [hasMore, setHasMore] = useState(false);
 
     useEffect(() => {
         window.scrollTo(0,0);
@@ -44,7 +44,6 @@ export default function CategoriesPage() {
         setArticles(data.articles ? data.articles : []);
         setNewElasticPointer(data.pointers ? data.pointers : null);
         setArticleLen(data.articles ? data.articles.length : 0);
-        setHasMore(data.articles ? true : false);
         // Re-run when data or params change, e.g. when the user navigates to a different page
     }, [data, params]);
 

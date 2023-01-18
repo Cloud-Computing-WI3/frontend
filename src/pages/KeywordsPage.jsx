@@ -21,12 +21,11 @@ export default function KeywordsPage() {
     const [articles, setArticles] = useState(data.articles ? data.articles : []);
     const [elasticPointer, setElasticPointer] = useState(data.pointers ? data.pointers : null);
     const location = useLocation()
-    const [hasMore, setHasMore] = useState(data.articles ? true : false);
+    const [hasMore, setHasMore] = useState(false);
 
     useEffect(() => {
         setArticles(data.articles ? data.articles : []);
         setElasticPointer(data.pointers ? data.pointers : null);
-        setHasMore(data.articles ? true : false);
         // Re-run when data or params change, e.g. when the user navigates to a different page
     }, [data, params]);
 
@@ -55,7 +54,7 @@ export default function KeywordsPage() {
             console.error(e);
         })
     }
-
+    console.log({hasMore});
     return (
         <>
             <Typography variant="h1" sx={{m: 2}}>My keywords</Typography>
