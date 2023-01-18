@@ -54,7 +54,6 @@ export default function KeywordsPage() {
             console.error(e);
         })
     }
-    console.log({hasMore});
     return (
         <>
             <Typography variant="h1" sx={{m: 2}}>My keywords</Typography>
