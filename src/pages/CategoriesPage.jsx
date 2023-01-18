@@ -44,6 +44,7 @@ export default function CategoriesPage() {
         setArticles(data.articles ? data.articles : []);
         setNewElasticPointer(data.pointers ? data.pointers : null);
         setArticleLen(data.articles ? data.articles.length : 0);
+        setHasMore(data.articles ? true : false);
         // Re-run when data or params change, e.g. when the user navigates to a different page
     }, [data, params]);
 
