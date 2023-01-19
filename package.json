@@ -25,6 +25,7 @@
     "react-infinite-scroll-component": "^6.1.0",
     "react-loader-spinner": "^5.3.4",
     "react-router-dom": "^6.4.2",
+    "register-service-worker": "^1.7.2",
     "reset-css": "^5.0.1",
     "yup": "^0.32.11"
   },
