@@ -13,7 +13,7 @@ import {Articles} from "./utils/apis/news_feed/articles.js";
 import {ArticlesByKeywords} from "./utils/apis/news_feed/articles_by_keywords.js";
 import {ArticlesByCategories} from "./utils/apis/news_feed/articles_by_categories.js";
 import {Accounts} from "./utils/apis/profile_management/accounts.js";
-import * as serviceWorkerRegistration from './serviceWorkerRegistration.js';
+import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 
 /**
  * createBrowserRouter function is used to create a new instance of the browser router

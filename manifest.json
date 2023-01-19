@@ -1,7 +1,7 @@
 {
     "short_name": "Newsify",
     "name": "Newsify: A news app but better",
-    "description": "Newsify is a news app that allows you to read news from different sources. It is a PWA",
+    "description": "Newsify is a news app that allows you to read news from different sources defined by your choosen keywords & catagories.",
     "version": "1.0",
     "icons": [
         {
@@ -32,9 +32,7 @@
     ],
     "start-url": "/",
     "background_color": "#fff",
-    "display": "fullscreen",
+    "display": "standalone",
     "scope": "/",
-    "theme_color": "#000",
-    "orientation": "portrait"
-    
+    "theme_color": "#000"    
 }
