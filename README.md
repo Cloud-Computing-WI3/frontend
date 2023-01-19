@@ -50,33 +50,36 @@ Frontend
 │   │   ├── LoginPage.jsx
 │   │   ├── NewsPage.jsx
 │   │   └── RegisterPage.jsx
-│   └── utils
-│       ├── apis
-│       ├── news_feed
-│       │   ├── articles_by_categories.js
-│       │   ├── articles_by_keywords.js
-│       │   ├── articles.js
-│       │   └── google_categories.js
-│       ├── profile_management
-│       │   ├── accounts.js
-│       │   ├── authentication.js
-│       │   ├── categories.js
-│       │   └── keywords.js
-│       ├── NewsFeed.jsx
-│       ├── ProfileManagement.jsx
-│       └── providers
-│           ├── AccountProvider.jsx
-│           ├── LoadingProvider.jsx
-│           └── MessageProvider.jsx
-├── App.jsx
-├── main.jsx
-├── Theme.jsx
+│   ├── utils
+│   │   ├── apis
+│   │   ├── news_feed
+│   │   │   ├── articles_by_categories.js
+│   │   │   ├── articles_by_keywords.js
+│   │   │   ├── articles.js
+│   │   │   └── google_categories.js
+│   │   ├── profile_management
+│   │   │   ├── accounts.js
+│   │   │   ├── authentication.js
+│   │   │   ├── categories.js
+│   │   │   └── keywords.js
+│   │   ├── NewsFeed.jsx
+│   │   ├── ProfileManagement.jsx
+│   │   └── providers
+│   │       ├── AccountProvider.jsx
+│   │       ├── LoadingProvider.jsx
+│   │       └── MessageProvider.jsx
+│   ├── App.jsx
+│   ├── main.jsx
+│   ├── Theme.jsx
+│   └── serviceWorkerRegistration.js
 ├── app.yaml
 ├── index.html
 ├── package.json
 ├── vite.config.js
-└── package-lock.json
+├── package-lock.json
+├── service-worker.js
+└── manifest.json
 ```
 
 The "Frontend" directory contains the files for the frontend of the project. The "src" directory holds the main source code for the frontend, including the "components" directory which contains reusable UI components.The "layout" directory contains the layout components. The "pages" directory holds the different pages of the application. The "utils" directory contains utility files such as the "apis", "news_feed" directory which contains the news feed functionalities "articles_by_categories.js", "articles_by_keywords.js", "articles.js" and "google_categories.js" files, the "profile_management" directory which contains the profile management functionalities "accounts.js", "authentication.js", "categories.js" and "keywords.js" files, and the "NewsFeed.jsx", "ProfileManagement.jsx" and "providers" directory which contains the providers "AccountProvider.jsx", "LoadingProvider.jsx" and "MessageProvider.jsx" files. The "App.jsx", "main.jsx" files are the entry point of the application. 
-"Theme.jsx" is where the application theme is configuered. The "app.yaml" file is used for deploying the application to Google App Engine. "index.html" is the main html file of the application. "package.json" contains the project dependencies."vite.config.js" file is used for configuring the development server.
+"Theme.jsx" is where the application theme is configuered. The "app.yaml" file is used for deploying the application to Google App Engine. "index.html" is the main html file of the application. "package.json" contains the project dependencies."vite.config.js" file is used for configuring the development server. "serviceWorkerRegistration.js" is used to register the "service-worker.js" so the app can be viewed offline. "manifest.json" is used to sepcify specific metadata for Newsify to function as a native app once put on homescreen.  
