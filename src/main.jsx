@@ -8,12 +8,13 @@ import UserPage from "./pages/user/UserPage";
 import LoginPage from "./pages/LoginPage";
 import RequireAuthRoute from "./layout/RequireAuthRoute";
 import RegisterPage from "./pages/RegisterPage";
-import NewsPage from "./pages/NewsPage";
+import CategoriesPage from "./pages/CategoriesPage.jsx";
 import {Articles} from "./utils/apis/news_feed/articles.js";
 import {ArticlesByKeywords} from "./utils/apis/news_feed/articles_by_keywords.js";
 import {ArticlesByCategories} from "./utils/apis/news_feed/articles_by_categories.js";
 import {Accounts} from "./utils/apis/profile_management/accounts.js";
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
+import KeywordsPage from "./pages/KeywordsPage.jsx";
 
 /**
  * createBrowserRouter function is used to create a new instance of the browser router
@@ -28,14 +29,14 @@ import * as serviceWorkerRegistration from './serviceWorkerRegistration';
  * LoginPage is the page for logging in to the application.
  * RequireAuthRoute is a higher order component that checks if user is logged in.
  * RegisterPage is the page for registering new users.
- * NewsPage is the page for displaying news articles.
+ * CategoriesPage is the page for displaying news articles.
  * Articles, ArticlesByKeywords, ArticlesByCategories and Accounts are API modules for retrieving data from the server.
  */
 
 const router = createBrowserRouter([
     {
         element: <App/>,
-        errorElement: <App><ErrorPage/></App>,
+        errorElement: <ErrorPage/>,
         path: "/",
         children: [
             {
@@ -67,27 +68,32 @@ const router = createBrowserRouter([
                     },
                     {
                         path: "/my/keywords",
-                        element: <NewsPage title={"My keywords"}/>,
+                        element: <KeywordsPage />,
                         /**
                          * loader function retrieves data from the server and returns it.
                          * In this case it is used to retrieve articles by keywords and return them.
                          */
                         loader: () => {
                             return Accounts.getKeywords().then(keywords => {
-                                const keywordNames = keywords.map(c => c.name).join(",");
-                                if (keywordNames.length > 0) {
-                                    return ArticlesByKeywords.get({
-                                        keywords: keywordNames,
-                                        elastic_pointer: null
-                                    }).then(res => {
-                                        return res;
-                                    }).catch(e => {
-                                        console.log(e);
+                                if (keywords.length > 0) {
+                                    const keywordNames = keywords.map(c => c.name).join(",");
+                                    if (keywordNames.length > 0) {
+                                        return ArticlesByKeywords.get({
+                                            keywords: keywordNames,
+                                            elastic_pointer: null
+                                        }).then(res => {
+                                            return res;
+                                        }).catch(e => {
+                                            console.log(e);
+                                            return [];
+                                        })
+                                    } else {
                                         return [];
-                                    })
-                                } else {
+                                    }
+                                }else {
                                     return [];
                                 }
+
                             }).catch(e => {
                                 console.log(e);
                                 return []
@@ -96,27 +102,32 @@ const router = createBrowserRouter([
                     },
                     {
                         path: "/my/categories",
-                        element: <NewsPage title={"My categories"}/>,
+                        element: <CategoriesPage title={"My categories"}/>,
                         /**
                          * loader function retrieves data from the server and returns it.
                          * In this case it is used to retrieve articles by categories and return them.
                          */
                         loader: () => {
                             return Accounts.getCategories().then(categories => {
-                                const categoryNames = categories.map(c => {
-                                    return {name: c.name, pointer: null}
-                                });
-                                if (categoryNames.length > 0) {
-                                    return ArticlesByCategories.get(categoryNames)
-                                        .then(res => {
-                                        return res;
-                                    }).catch(e => {
-                                        console.log(e);
+                                if (categories.length > 0) {
+                                    const categoryNames = categories.map(c => {
+                                        return {name: c.name, pointer: null}
+                                    });
+                                    if (categoryNames.length > 0) {
+                                        return ArticlesByCategories.get(categoryNames)
+                                            .then(res => {
+                                                return res;
+                                            }).catch(e => {
+                                                console.log(e);
+                                                return [];
+                                            })
+                                    } else {
                                         return [];
-                                    })
-                                } else {
+                                    }
+                                }else {
                                     return [];
                                 }
+
                             }).catch(e => {
                                 console.log(e);
                                 return []
@@ -125,7 +136,7 @@ const router = createBrowserRouter([
                     },
                     {
                         path: "/categories/:categoryName",
-                        element: <NewsPage/>,
+                        element: <CategoriesPage/>,
                         loader: ({params}) => {
                             return Articles.get({
                                 category_name: params.categoryName,

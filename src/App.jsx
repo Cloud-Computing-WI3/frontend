@@ -1,6 +1,5 @@
 import {ThemeProvider} from "@mui/material";
 import theme from "./Theme";
-import {Outlet} from "react-router-dom";
 import Header from "./layout/Header";
 import Content from "./layout/Content";
 import {AccountProvider} from "./utils/providers/AccountProvider.jsx";
