@@ -28,54 +28,57 @@ User können Vorlieben und Schlagworte in ihrem Profil hinterlegen und bekommen 
 ## Repository Overview
 
 ```
-Frontend
-├── src
-│   ├── components
-│   │   ├── KeywordAutocomplete.jsx
-│   │   ├── LoadingScreen.jsx
-│   │   ├── MediaCard.css
-│   │   ├── MediaCard.jsx
-│   │   └── Message.jsx
-│   ├── layout
-│   │   ├── Content.jsx
-│   │   ├── Header.css
-│   │   ├── Header.jsx
-│   │   └── RequireAuthRoute.jsx
-│   ├── pages
-│   │   ├── user
-│   │   │   └── UserPage.jsx
-│   │   ├── ErrorPage.jsx
-│   │   ├── HomePage.jsx
-│   │   ├── LoginPage.css
-│   │   ├── LoginPage.jsx
-│   │   ├── NewsPage.jsx
-│   │   └── RegisterPage.jsx
-│   └── utils
-│       ├── apis
-│       ├── news_feed
-│       │   ├── articles_by_categories.js
-│       │   ├── articles_by_keywords.js
-│       │   ├── articles.js
-│       │   └── google_categories.js
-│       ├── profile_management
-│       │   ├── accounts.js
-│       │   ├── authentication.js
-│       │   ├── categories.js
-│       │   └── keywords.js
-│       ├── NewsFeed.jsx
-│       ├── ProfileManagement.jsx
-│       └── providers
-│           ├── AccountProvider.jsx
-│           ├── LoadingProvider.jsx
-│           └── MessageProvider.jsx
-├── App.jsx
-├── main.jsx
-├── Theme.jsx
-├── app.yaml
-├── index.html
-├── package.json
-├── vite.config.js
-└── package-lock.json
+#Frontend
+## src
+### components
+#### KeywordAutocomplete.jsx
+#### LoadingScreen.jsx
+#### MediaCard.css
+#### MediaCard.jsx
+#### Message.jsx
+### layout
+#### Content.jsx
+#### Header.css
+#### Header.jsx
+#### RequireAuthRoute.jsx
+### pages
+#### user
+##### UserPage.jsx
+#### ErrorPage.jsx
+#### HomePage.jsx
+#### LoginPage.css
+#### LoginPage.jsx
+#### NewsPage.jsx
+#### RegisterPage.jsx
+### utils
+#### apis
+#### news_feed
+##### articles_by_categories.js
+##### articles_by_keywords.js
+##### articles.js
+##### google_categories.js
+#### profile_management
+##### accounts.js
+##### authentication.js
+##### categories.js
+##### keywords.js
+#### NewsFeed.jsx
+#### ProfileManagement.jsx
+#### providers
+##### AccountProvider.jsx
+##### LoadingProvider.jsx
+##### MessageProvider.jsx
+### App.jsx
+### main.jsx
+### Theme.jsx
+### serviceWorkerRegistration
+## app.yaml
+## index.html
+## package.json
+## vite.config.js
+## package-lock.json
+## service-worker.js
+## manifest.json
 ```
 
 The "Frontend" directory contains the files for the frontend of the project. The "src" directory holds the main source code for the frontend, including the "components" directory which contains reusable UI components.The "layout" directory contains the layout components. The "pages" directory holds the different pages of the application. The "utils" directory contains utility files such as the "apis", "news_feed" directory which contains the news feed functionalities "articles_by_categories.js", "articles_by_keywords.js", "articles.js" and "google_categories.js" files, the "profile_management" directory which contains the profile management functionalities "accounts.js", "authentication.js", "categories.js" and "keywords.js" files, and the "NewsFeed.jsx", "ProfileManagement.jsx" and "providers" directory which contains the providers "AccountProvider.jsx", "LoadingProvider.jsx" and "MessageProvider.jsx" files. The "App.jsx", "main.jsx" files are the entry point of the application. 
